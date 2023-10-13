@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>438</width>
+    <height>475</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QPushButton" name="import_btn">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>440</y>
+     <width>131</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>从weburl导回设置</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>32</x>
+     <y>387</y>
+     <width>210</width>
+     <height>46</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <widget class="QCheckBox" name="is_hd">
+      <property name="text">
+       <string>图片/参数传输完成后是否自动开始</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="is_back_ps">
+      <property name="text">
+       <string>是否在完成后直接传回ps</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="check_btn">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>440</y>
+     <width>91</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>确认</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="import_combo_2">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>68</y>
+     <width>131</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>从当前页导回后选择</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="import_combo">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>41</y>
+     <width>131</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>从当前页导回后选择</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="import_combo_3">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>338</y>
+     <width>131</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>从当前页导回后选择</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>23</x>
+     <y>13</y>
+     <width>110</width>
+     <height>351</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;名字&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;模型&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;采样方法&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;正向提示词&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;反向提示词&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;最大导入分辨率&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;低清放大阈值分辨率&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_9">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;每步骤时间&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_10">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;开始步骤间隔时间&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_11">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;导入快捷键&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_12">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;传回快捷键&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_13">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;开始运算快捷键&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_14">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;放大算法&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLineEdit" name="sample_method">
+   <property name="geometry">
+    <rect>
+     <x>161</x>
+     <y>68</y>
+     <width>133</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="negative">
+   <property name="geometry">
+    <rect>
+     <x>161</x>
+     <y>122</y>
+     <width>133</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="max_hd">
+   <property name="geometry">
+    <rect>
+     <x>161</x>
+     <y>176</y>
+     <width>133</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>1024</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="max_pics">
+   <property name="geometry">
+    <rect>
+     <x>161</x>
+     <y>149</y>
+     <width>133</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>1500</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="positive">
+   <property name="geometry">
+    <rect>
+     <x>161</x>
+     <y>95</y>
+     <width>133</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="short_key3">
+   <property name="geometry">
+    <rect>
+     <x>161</x>
+     <y>311</y>
+     <width>133</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>ctrl+shift+f3</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="hd_method">
+   <property name="geometry">
+    <rect>
+     <x>161</x>
+     <y>338</y>
+     <width>133</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="layer_name">
+   <property name="geometry">
+    <rect>
+     <x>161</x>
+     <y>14</y>
+     <width>133</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>新预设</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="continue2">
+   <property name="geometry">
+    <rect>
+     <x>161</x>
+     <y>230</y>
+     <width>133</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>2.0</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="short_key1">
+   <property name="geometry">
+    <rect>
+     <x>161</x>
+     <y>257</y>
+     <width>133</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>ctrl+f2</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="continue1">
+   <property name="geometry">
+    <rect>
+     <x>161</x>
+     <y>203</y>
+     <width>133</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0.5</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="short_key2">
+   <property name="geometry">
+    <rect>
+     <x>161</x>
+     <y>284</y>
+     <width>133</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>ctrl+f3</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="model_name">
+   <property name="geometry">
+    <rect>
+     <x>161</x>
+     <y>41</y>
+     <width>133</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

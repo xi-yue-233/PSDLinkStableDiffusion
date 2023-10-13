@@ -1,0 +1,62 @@
+[
+    {
+        "enable": true,
+        "name": "\u6d4b\u8bd51",
+        "preprocessor": "canny",
+        "model": "control_canny-fp16 [e3fe7712]",
+        "resolution": 512,
+        "param1": 100,
+        "param2": 200,
+        "pixel_perfect": true
+    },
+    {
+        "enable": true,
+        "name": "\u6d4b\u8bd52",
+        "preprocessor": "canny",
+        "model": "control_v11p_sd15_mlsd_fp16 [77b5ad24]",
+        "resolution": 512,
+        "param1": 128,
+        "param2": 180,
+        "pixel_perfect": true
+    },
+    {
+        "enable": true,
+        "name": "3.0.1canny",
+        "preprocessor": "canny",
+        "model": "control_v11p_sd15_canny_fp16 [b18e0966]",
+        "resolution": 512,
+        "param1": 128,
+        "param2": 180,
+        "pixel_perfect": true
+    },
+    {
+        "enable": true,
+        "name": "\u65b0\u9884\u8bbe",
+        "preprocessor": "canny",
+        "model": "control_v11p_sd15_canny_fp16 [b18e0966]",
+        "resolution": 512,
+        "param1": 128,
+        "param2": 180,
+        "pixel_perfect": true
+    },
+    {
+        "enable": true,
+        "name": "\u65b0\u9884\u8bbe",
+        "preprocessor": "canny",
+        "model": "control_v11p_sd15_canny_fp16 [b18e0966]",
+        "resolution": 512,
+        "param1": 128,
+        "param2": 180,
+        "pixel_perfect": true
+    },
+    {
+        "enable": true,
+        "name": "\u65b0\u9884\u8bbe",
+        "preprocessor": "canny",
+        "model": "control_v11p_sd15_canny_fp16 [b18e0966]",
+        "resolution": 512,
+        "param1": 128,
+        "param2": 180,
+        "pixel_perfect": true
+    }
+]
