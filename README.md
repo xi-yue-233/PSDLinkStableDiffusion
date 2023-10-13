@@ -1,0 +1,2 @@
+# PSDLinkStableDiffusion
+用于连接PSD和Stable diffusion的软件
