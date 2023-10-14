@@ -169,7 +169,7 @@ class small_windows(QMainWindow):
             self.ui_tab_w.add_negative_edit.setText(i.add_negative_edit.text())
             self.ui_tab_w.is_use_translate.setChecked(i.is_use_translate.isChecked())
             self.ui_tab_w.paint_weight.setText(i.paint_weight.text())
-            self.ui_tab_w.paint_count.setText(i.paint_weight.text())
+            self.ui_tab_w.paint_count.setText(i.paint_count.text())
             self.ui_tab_w.webui_url.setText(i.webui_url.text())
             self.ui_tab_w.is_hd.setChecked(i.is_hd.isChecked())
             self.ui_tab_w.hd_weight.setText(i.hd_weight.text())
