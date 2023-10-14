@@ -130,5 +130,7 @@
     "isnight": true,
     "ispswindow": true,
     "isopacity": false,
-    "lama_url": "1"
+    "lama_url": "1",
+    "save_x": 1458,
+    "save_y": 168
 }

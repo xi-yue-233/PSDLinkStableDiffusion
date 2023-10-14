@@ -5,7 +5,7 @@ import keyboard
 from PyQt5.QtGui import QIntValidator, QRegularExpressionValidator, QTextCharFormat, QColor, \
     QMouseEvent, QKeySequence
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QPushButton, QWidget, QToolBar, QAction, QLayout, \
-    QShortcut
+    QShortcut, QDesktopWidget
 from PyQt5.QtCore import Qt, QRegularExpression, QPoint, QCoreApplication
 
 from PyQt5 import QtWidgets
@@ -69,6 +69,11 @@ class small_windows(QMainWindow):
         self.ui.tabWidget.currentChanged.connect(
             lambda: parent.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.currentIndex()))
 
+        BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
+        with open(os.path.join(BASE_PATH, "config.json"), "r") as f:
+            data = json.load(f)
+            self.move(data["save_x"],data["save_y"])
+
     def change_to_Main_w(self, parent):
         repair_pswindow(False)
         parent.show()
@@ -94,6 +99,30 @@ class small_windows(QMainWindow):
             self.__is_tracking = False
             self.__start_pos = None
             self.__end_pos = None
+
+            screen = QDesktopWidget().screenGeometry()
+            limx = screen.width() - self.geometry().width()
+            limy = screen.height() - self.geometry().height()
+            BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
+            save_x = self.geometry().x()
+            if save_x > limx:
+                save_x = limx
+            elif save_x < 0:
+                save_x = 0
+            save_y = self.geometry().y()
+            if save_y > limy:
+                save_y = limy
+            elif save_y < 0:
+                save_y = 0
+            with open(os.path.join(BASE_PATH, "config.json"), "r") as f:
+                data = json.load(f)
+                data["save_x"] = save_x
+                data["save_y"] = save_y
+            with open(os.path.join(BASE_PATH, "config.json"), "w") as f:
+                # 将 python 字典转换为 json 字符串，并指定缩进为 4 个空格
+                formatted_data = json.dumps(data, indent=4)
+                # 将格式化后的 json 字符串写入新的文件
+                f.write(formatted_data)
 
     def outputWritten(self, text):
         format = QTextCharFormat()
