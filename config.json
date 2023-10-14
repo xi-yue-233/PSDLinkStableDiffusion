@@ -128,5 +128,7 @@
     "only_import": true,
     "isplaysound": true,
     "isnight": true,
-    "ispswindow": true
+    "ispswindow": true,
+    "isopacity": false,
+    "lama_url": "1"
 }

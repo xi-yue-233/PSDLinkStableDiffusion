@@ -47,6 +47,7 @@ class small_windows(QMainWindow):
         self.null_tab_windows = QtWidgets.QWidget()
         self.ui = small_window.Ui_MainWindow()
         self.ui.setupUi(self)
+        set_opacity(self)
         self.setWindowFlags(parent.windowFlags() | Qt.FramelessWindowHint)
         parent.hide()
         self.show()
@@ -75,6 +76,7 @@ class small_windows(QMainWindow):
         parent.ui.textBrowser.insertHtml(self.ui.textBrowser.toHtml())
         sys.stdout = EmittingStr(textWritten=parent.outputWritten)
         sys.stderr = EmittingStr(textWritten=parent.outputWritten_erro)
+        set_opacity(parent)
         self.hide()
 
     def mouseMoveEvent(self, event_: QMouseEvent):
@@ -282,6 +284,8 @@ class small_windows(QMainWindow):
         self.ui.action_optop.triggered.connect(lambda: [toggle_topmost(self), toggle_topmost(parent), parent.hide()])
         self.ui.action_to_night_2.triggered.connect(lambda: repair_is_night(True))
         self.ui.action_to_early.triggered.connect(lambda: repair_is_night(False))
+        self.ui.actionopcacity_true.triggered.connect(lambda: repair_is_opacity(True,self))
+        self.ui.actionopcacity_false.triggered.connect(lambda: repair_is_opacity(False,self))
 
         # 绑定副窗口工作栏功能
         # self.ui_small.action_to_main_win.triggered.connect(lambda: self.change_main_window())
@@ -325,6 +329,7 @@ class small_windows(QMainWindow):
                 data["hd"] = application_list[0].is_hd.isChecked()
                 data["hdam"] = application_list[0].hd_weight.text()
                 data["control_index"] = application_list[0].cn0_preset.currentIndex()
+                data["lama_url"] = application_list[0].lama_url.text()
             with open(os.path.join(BASE_PATH, "config.json"), "w") as f:
                 # 将 python 字典转换为 json 字符串，并指定缩进为 4 个空格
                 formatted_data = json.dumps(data, indent=4)
@@ -354,6 +359,7 @@ class Main_windows(QMainWindow):
         self.null_tab_windows = QtWidgets.QWidget()
         self.ui = main_window.Ui_MainWindow()
         self.ui.setupUi(self)
+        set_opacity(self)
 
         sys.stdout = EmittingStr(textWritten=self.outputWritten)
         sys.stderr = EmittingStr(textWritten=self.outputWritten_erro)
@@ -577,6 +583,8 @@ class Main_windows(QMainWindow):
         self.ui.action_to_night_2.triggered.connect(lambda: repair_is_night(True))
         self.ui.action_to_early.triggered.connect(lambda: repair_is_night(False))
         self.ui.action_to_by_win.triggered.connect(lambda: self.init_sub_win())
+        self.ui.actionopcacity_true.triggered.connect(lambda: repair_is_opacity(True,self))
+        self.ui.actionopcacity_false.triggered.connect(lambda: repair_is_opacity(False,self))
 
         # 绑定副窗口工作栏功能
         # self.ui_small.action_to_main_win.triggered.connect(lambda: self.change_main_window())
@@ -687,6 +695,9 @@ class Main_windows(QMainWindow):
         self.ui_tab_w.cn2_preset.setCurrentIndex(0)
         self.ui_tab_w.cn3_preset.setCurrentIndex(0)
 
+        # 设置lama url
+        self.ui_tab_w.lama_url.setText(data["lama_url"])
+
         # 连接tab上的预设设置按钮
         self.ui_tab_w.set_preset.clicked.connect(
             lambda: open_set_preset(self, self.ui_tab_w.preset_combo.currentIndex(), application_list))
@@ -755,6 +766,7 @@ class Main_windows(QMainWindow):
                 data["hd"] = application_list[0].is_hd.isChecked()
                 data["hdam"] = application_list[0].hd_weight.text()
                 data["control_index"] = application_list[0].cn0_preset.currentIndex()
+                data["lama_url"] = application_list[0].lama_url.text()
             with open(os.path.join(BASE_PATH, "config.json"), "w") as f:
                 # 将 python 字典转换为 json 字符串，并指定缩进为 4 个空格
                 formatted_data = json.dumps(data, indent=4)
@@ -803,6 +815,8 @@ if __name__ == '__main__':
     # w.show()
     # 查看昼夜模式
     check_is_night()
+    # 查看是否透明
+    check_opacity()
     night_theme()
     # 设置为置顶
     toggle_topmost(w)

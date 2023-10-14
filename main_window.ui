@@ -173,7 +173,15 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <addaction name="actionyinpin_start"/>
      <addaction name="actionyinpin_stop"/>
     </widget>
+    <widget class="QMenu" name="menu_7">
+     <property name="title">
+      <string>设置透明度</string>
+     </property>
+     <addaction name="actionopcacity_true"/>
+     <addaction name="actionopcacity_false"/>
+    </widget>
     <addaction name="menuyinpin"/>
+    <addaction name="menu_7"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
@@ -266,6 +274,16 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <action name="actionsetting">
    <property name="text">
     <string>Autodl账号密码配置</string>
+   </property>
+  </action>
+  <action name="actionopcacity_true">
+   <property name="text">
+    <string>不透明</string>
+   </property>
+  </action>
+  <action name="actionopcacity_false">
+   <property name="text">
+    <string>半透明</string>
    </property>
   </action>
  </widget>
