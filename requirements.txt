@@ -1,0 +1,5 @@
+keyboard~=0.13.5
+PyQt5~=5.15.9
+Pillow~=9.5.0
+requests~=2.30.0
+selenium~=4.6.0

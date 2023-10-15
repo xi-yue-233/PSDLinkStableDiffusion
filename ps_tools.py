@@ -131,7 +131,6 @@ def import_image_from_sd(app, img_name, count):
 def short_key_import_image_from_sd(app, img_name, count):
     BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
     EXPORT_PATH = os.path.join(BASE_PATH, "EXPORT_SD")
-    documents = app.documents
     # 获取文档的宽度和高度
     doc_width = app.activeDocument.width
     doc_height = app.activeDocument.height

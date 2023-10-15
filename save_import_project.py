@@ -36,9 +36,9 @@ def save_project(Main_w, application_list):
         hd_method = setting["algorithm"]
         is_hd = setting["continue1"]
         is_back_ps = setting["continue2"]
-        hotkey1 = setting["hotkey1"],
-        hotkey2 = setting["hotkey2"],
-        hotkey3 = setting["hotkey3"],
+        hotkey1 = setting["hotkey1"]
+        hotkey2 = setting["hotkey2"]
+        hotkey3 = setting["hotkey3"]
         continue1 = float(setting["interval1"])
         continue2 = float(setting["interval2"])
         max_pics = int(setting["max_psi1"])
@@ -50,13 +50,13 @@ def save_project(Main_w, application_list):
 
         item_data["model"]=model
         item_data["hd_method"]=hd_method
-        item_data["is_hd"]=is_hd
-        item_data["is_back_ps"]=is_back_ps
+        item_data["continue1"]=is_hd
+        item_data["continue2"]=is_back_ps
         item_data["hotkey1"]=hotkey1
         item_data["hotkey2"]=hotkey2
         item_data["hotkey3"]=hotkey3
-        item_data["continue1"]=continue1
-        item_data["continue2"]=continue2
+        item_data["interval1"]=continue1
+        item_data["interval2"]=continue2
         item_data["max_pics"]=max_pics
         item_data["max_hd"]=max_hd
         item_data["negative"]=negative
@@ -75,14 +75,14 @@ def save_project(Main_w, application_list):
 
         if i.cn0_preset.currentIndex():
             item_data["cn0_enable"] = True
-            cn0_preset = {"enable": data_cn[i.cn0_preset.currentIndex()]["enable"],
-                          "name": data_cn[i.cn0_preset.currentIndex()]["name"],
-                          "preprocessor": data_cn[i.cn0_preset.currentIndex()]["preprocessor"],
-                          "model": data_cn[i.cn0_preset.currentIndex()]["model"],
-                          "resolution": data_cn[i.cn0_preset.currentIndex()]["resolution"],
-                          "param1": data_cn[i.cn0_preset.currentIndex()]["param1"],
-                          "param2": data_cn[i.cn0_preset.currentIndex()]["param2"],
-                          "pixel_perfect": data_cn[i.cn0_preset.currentIndex()]["pixel_perfect"],
+            cn0_preset = {"enable": data_cn[i.cn0_preset.currentIndex()-1]["enable"],
+                          "name": data_cn[i.cn0_preset.currentIndex()-1]["name"],
+                          "preprocessor": data_cn[i.cn0_preset.currentIndex()-1]["preprocessor"],
+                          "model": data_cn[i.cn0_preset.currentIndex()-1]["model"],
+                          "resolution": data_cn[i.cn0_preset.currentIndex()-1]["resolution"],
+                          "param1": data_cn[i.cn0_preset.currentIndex()-1]["param1"],
+                          "param2": data_cn[i.cn0_preset.currentIndex()-1]["param2"],
+                          "pixel_perfect": data_cn[i.cn0_preset.currentIndex()-1]["pixel_perfect"],
                           }
             item_data["cn0_preset"] = cn0_preset
             item_data["cn0_layer"] = i.cn0_layer.text()
@@ -91,14 +91,14 @@ def save_project(Main_w, application_list):
 
         if i.cn1_preset.currentIndex():
             item_data["cn1_enable"] = True
-            cn1_preset = {"enable": data_cn[i.cn1_preset.currentIndex()]["enable"],
-                          "name": data_cn[i.cn1_preset.currentIndex()]["name"],
-                          "preprocessor": data_cn[i.cn1_preset.currentIndex()]["preprocessor"],
-                          "model": data_cn[i.cn1_preset.currentIndex()]["model"],
-                          "resolution": data_cn[i.cn1_preset.currentIndex()]["resolution"],
-                          "param1": data_cn[i.cn1_preset.currentIndex()]["param1"],
-                          "param2": data_cn[i.cn1_preset.currentIndex()]["param2"],
-                          "pixel_perfect": data_cn[i.cn1_preset.currentIndex()]["pixel_perfect"],
+            cn1_preset = {"enable": data_cn[i.cn1_preset.currentIndex()-1]["enable"],
+                          "name": data_cn[i.cn1_preset.currentIndex()-1]["name"],
+                          "preprocessor": data_cn[i.cn1_preset.currentIndex()-1]["preprocessor"],
+                          "model": data_cn[i.cn1_preset.currentIndex()-1]["model"],
+                          "resolution": data_cn[i.cn1_preset.currentIndex()-1]["resolution"],
+                          "param1": data_cn[i.cn1_preset.currentIndex()-1]["param1"],
+                          "param2": data_cn[i.cn1_preset.currentIndex()-1]["param2"],
+                          "pixel_perfect": data_cn[i.cn1_preset.currentIndex()-1]["pixel_perfect"],
                           }
             item_data["cn1_preset"] = cn1_preset
             item_data["cn1_layer"] = i.cn1_layer.text()
@@ -107,14 +107,14 @@ def save_project(Main_w, application_list):
 
         if i.cn2_preset.currentIndex():
             item_data["cn2_enable"] = True
-            cn2_preset = {"enable": data_cn[i.cn2_preset.currentIndex()]["enable"],
-                          "name": data_cn[i.cn2_preset.currentIndex()]["name"],
-                          "preprocessor": data_cn[i.cn2_preset.currentIndex()]["preprocessor"],
-                          "model": data_cn[i.cn2_preset.currentIndex()]["model"],
-                          "resolution": data_cn[i.cn2_preset.currentIndex()]["resolution"],
-                          "param1": data_cn[i.cn2_preset.currentIndex()]["param1"],
-                          "param2": data_cn[i.cn2_preset.currentIndex()]["param2"],
-                          "pixel_perfect": data_cn[i.cn2_preset.currentIndex()]["pixel_perfect"],
+            cn2_preset = {"enable": data_cn[i.cn2_preset.currentIndex()-1]["enable"],
+                          "name": data_cn[i.cn2_preset.currentIndex()-1]["name"],
+                          "preprocessor": data_cn[i.cn2_preset.currentIndex()-1]["preprocessor"],
+                          "model": data_cn[i.cn2_preset.currentIndex()-1]["model"],
+                          "resolution": data_cn[i.cn2_preset.currentIndex()-1]["resolution"],
+                          "param1": data_cn[i.cn2_preset.currentIndex()-1]["param1"],
+                          "param2": data_cn[i.cn2_preset.currentIndex()-1]["param2"],
+                          "pixel_perfect": data_cn[i.cn2_preset.currentIndex()-1]["pixel_perfect"],
                           }
             item_data["cn2_preset"] = cn2_preset
             item_data["cn2_layer"] = i.cn2_layer.text()
@@ -123,14 +123,14 @@ def save_project(Main_w, application_list):
 
         if i.cn3_preset.currentIndex():
             item_data["cn3_enable"] = True
-            cn3_preset = {"enable": data_cn[i.cn3_preset.currentIndex()]["enable"],
-                          "name": data_cn[i.cn3_preset.currentIndex()]["name"],
-                          "preprocessor": data_cn[i.cn3_preset.currentIndex()]["preprocessor"],
-                          "model": data_cn[i.cn3_preset.currentIndex()]["model"],
-                          "resolution": data_cn[i.cn3_preset.currentIndex()]["resolution"],
-                          "param1": data_cn[i.cn3_preset.currentIndex()]["param1"],
-                          "param2": data_cn[i.cn3_preset.currentIndex()]["param2"],
-                          "pixel_perfect": data_cn[i.cn3_preset.currentIndex()]["pixel_perfect"],
+            cn3_preset = {"enable": data_cn[i.cn3_preset.currentIndex()-1]["enable"],
+                          "name": data_cn[i.cn3_preset.currentIndex()-1]["name"],
+                          "preprocessor": data_cn[i.cn3_preset.currentIndex()-1]["preprocessor"],
+                          "model": data_cn[i.cn3_preset.currentIndex()-1]["model"],
+                          "resolution": data_cn[i.cn3_preset.currentIndex()-1]["resolution"],
+                          "param1": data_cn[i.cn3_preset.currentIndex()-1]["param1"],
+                          "param2": data_cn[i.cn3_preset.currentIndex()-1]["param2"],
+                          "pixel_perfect": data_cn[i.cn3_preset.currentIndex()-1]["pixel_perfect"],
                           }
             item_data["cn3_preset"] = cn3_preset
             item_data["cn3_layer"] = i.cn3_layer.text()
@@ -182,9 +182,9 @@ def save_project_self(Main_w, application_list, current_index):
     hd_method = setting["algorithm"]
     is_hd = setting["continue1"]
     is_back_ps = setting["continue2"]
-    hotkey1 = setting["hotkey1"],
-    hotkey2 = setting["hotkey2"],
-    hotkey3 = setting["hotkey3"],
+    hotkey1 = setting["hotkey1"]
+    hotkey2 = setting["hotkey2"]
+    hotkey3 = setting["hotkey3"]
     continue1 = float(setting["interval1"])
     continue2 = float(setting["interval2"])
     max_pics = int(setting["max_psi1"])
@@ -196,13 +196,13 @@ def save_project_self(Main_w, application_list, current_index):
 
     item_data["model"] = model
     item_data["hd_method"] = hd_method
-    item_data["is_hd"] = is_hd
-    item_data["is_back_ps"] = is_back_ps
+    item_data["continue1"] = is_hd
+    item_data["continue2"] = is_back_ps
     item_data["hotkey1"] = hotkey1
     item_data["hotkey2"] = hotkey2
     item_data["hotkey3"] = hotkey3
-    item_data["continue1"] = continue1
-    item_data["continue2"] = continue2
+    item_data["interval1"] = continue1
+    item_data["interval2"] = continue2
     item_data["max_pics"] = max_pics
     item_data["max_hd"] = max_hd
     item_data["negative"] = negative
@@ -221,15 +221,15 @@ def save_project_self(Main_w, application_list, current_index):
 
     if application_list[current_index].cn0_preset.currentIndex():
         item_data["cn0_enable"] = True
-        cn0_preset = {"enable": data_cn[application_list[current_index].cn0_preset.currentIndex()]["enable"],
-                      "name": data_cn[application_list[current_index].cn0_preset.currentIndex()]["name"],
-                      "preprocessor": data_cn[application_list[current_index].cn0_preset.currentIndex()][
+        cn0_preset = {"enable": data_cn[application_list[current_index].cn0_preset.currentIndex()-1]["enable"],
+                      "name": data_cn[application_list[current_index].cn0_preset.currentIndex()-1]["name"],
+                      "preprocessor": data_cn[application_list[current_index].cn0_preset.currentIndex()-1][
                           "preprocessor"],
-                      "model": data_cn[application_list[current_index].cn0_preset.currentIndex()]["model"],
-                      "resolution": data_cn[application_list[current_index].cn0_preset.currentIndex()]["resolution"],
-                      "param1": data_cn[application_list[current_index].cn0_preset.currentIndex()]["param1"],
-                      "param2": data_cn[application_list[current_index].cn0_preset.currentIndex()]["param2"],
-                      "pixel_perfect": data_cn[application_list[current_index].cn0_preset.currentIndex()][
+                      "model": data_cn[application_list[current_index].cn0_preset.currentIndex()-1]["model"],
+                      "resolution": data_cn[application_list[current_index].cn0_preset.currentIndex()-1]["resolution"],
+                      "param1": data_cn[application_list[current_index].cn0_preset.currentIndex()-1]["param1"],
+                      "param2": data_cn[application_list[current_index].cn0_preset.currentIndex()-1]["param2"],
+                      "pixel_perfect": data_cn[application_list[current_index].cn0_preset.currentIndex()-1][
                           "pixel_perfect"],
                       }
         item_data["cn0_preset"] = cn0_preset
@@ -239,15 +239,15 @@ def save_project_self(Main_w, application_list, current_index):
 
     if application_list[current_index].cn1_preset.currentIndex():
         item_data["cn1_enable"] = True
-        cn1_preset = {"enable": data_cn[application_list[current_index].cn1_preset.currentIndex()]["enable"],
-                      "name": data_cn[application_list[current_index].cn1_preset.currentIndex()]["name"],
-                      "preprocessor": data_cn[application_list[current_index].cn1_preset.currentIndex()][
+        cn1_preset = {"enable": data_cn[application_list[current_index].cn1_preset.currentIndex()-1]["enable"],
+                      "name": data_cn[application_list[current_index].cn1_preset.currentIndex()-1]["name"],
+                      "preprocessor": data_cn[application_list[current_index].cn1_preset.currentIndex()-1][
                           "preprocessor"],
-                      "model": data_cn[application_list[current_index].cn1_preset.currentIndex()]["model"],
-                      "resolution": data_cn[application_list[current_index].cn1_preset.currentIndex()]["resolution"],
-                      "param1": data_cn[application_list[current_index].cn1_preset.currentIndex()]["param1"],
-                      "param2": data_cn[application_list[current_index].cn1_preset.currentIndex()]["param2"],
-                      "pixel_perfect": data_cn[application_list[current_index].cn1_preset.currentIndex()][
+                      "model": data_cn[application_list[current_index].cn1_preset.currentIndex()-1]["model"],
+                      "resolution": data_cn[application_list[current_index].cn1_preset.currentIndex()-1]["resolution"],
+                      "param1": data_cn[application_list[current_index].cn1_preset.currentIndex()-1]["param1"],
+                      "param2": data_cn[application_list[current_index].cn1_preset.currentIndex()-1]["param2"],
+                      "pixel_perfect": data_cn[application_list[current_index].cn1_preset.currentIndex()-1][
                           "pixel_perfect"],
                       }
         item_data["cn1_preset"] = cn1_preset
@@ -257,15 +257,15 @@ def save_project_self(Main_w, application_list, current_index):
 
     if application_list[current_index].cn2_preset.currentIndex():
         item_data["cn2_enable"] = True
-        cn2_preset = {"enable": data_cn[application_list[current_index].cn2_preset.currentIndex()]["enable"],
-                      "name": data_cn[application_list[current_index].cn2_preset.currentIndex()]["name"],
-                      "preprocessor": data_cn[application_list[current_index].cn2_preset.currentIndex()][
+        cn2_preset = {"enable": data_cn[application_list[current_index].cn2_preset.currentIndex()-1]["enable"],
+                      "name": data_cn[application_list[current_index].cn2_preset.currentIndex()-1]["name"],
+                      "preprocessor": data_cn[application_list[current_index].cn2_preset.currentIndex()-1][
                           "preprocessor"],
-                      "model": data_cn[application_list[current_index].cn2_preset.currentIndex()]["model"],
-                      "resolution": data_cn[application_list[current_index].cn2_preset.currentIndex()]["resolution"],
-                      "param1": data_cn[application_list[current_index].cn2_preset.currentIndex()]["param1"],
-                      "param2": data_cn[application_list[current_index].cn2_preset.currentIndex()]["param2"],
-                      "pixel_perfect": data_cn[application_list[current_index].cn2_preset.currentIndex()][
+                      "model": data_cn[application_list[current_index].cn2_preset.currentIndex()-1]["model"],
+                      "resolution": data_cn[application_list[current_index].cn2_preset.currentIndex()-1]["resolution"],
+                      "param1": data_cn[application_list[current_index].cn2_preset.currentIndex()-1]["param1"],
+                      "param2": data_cn[application_list[current_index].cn2_preset.currentIndex()-1]["param2"],
+                      "pixel_perfect": data_cn[application_list[current_index].cn2_preset.currentIndex()-1][
                           "pixel_perfect"],
                       }
         item_data["cn2_preset"] = cn2_preset
@@ -275,15 +275,15 @@ def save_project_self(Main_w, application_list, current_index):
 
     if application_list[current_index].cn3_preset.currentIndex():
         item_data["cn3_enable"] = True
-        cn3_preset = {"enable": data_cn[application_list[current_index].cn3_preset.currentIndex()]["enable"],
-                      "name": data_cn[application_list[current_index].cn3_preset.currentIndex()]["name"],
-                      "preprocessor": data_cn[application_list[current_index].cn3_preset.currentIndex()][
+        cn3_preset = {"enable": data_cn[application_list[current_index].cn3_preset.currentIndex()-1]["enable"],
+                      "name": data_cn[application_list[current_index].cn3_preset.currentIndex()-1]["name"],
+                      "preprocessor": data_cn[application_list[current_index].cn3_preset.currentIndex()-1][
                           "preprocessor"],
-                      "model": data_cn[application_list[current_index].cn3_preset.currentIndex()]["model"],
-                      "resolution": data_cn[application_list[current_index].cn3_preset.currentIndex()]["resolution"],
-                      "param1": data_cn[application_list[current_index].cn3_preset.currentIndex()]["param1"],
-                      "param2": data_cn[application_list[current_index].cn3_preset.currentIndex()]["param2"],
-                      "pixel_perfect": data_cn[application_list[current_index].cn3_preset.currentIndex()][
+                      "model": data_cn[application_list[current_index].cn3_preset.currentIndex()-1]["model"],
+                      "resolution": data_cn[application_list[current_index].cn3_preset.currentIndex()-1]["resolution"],
+                      "param1": data_cn[application_list[current_index].cn3_preset.currentIndex()-1]["param1"],
+                      "param2": data_cn[application_list[current_index].cn3_preset.currentIndex()-1]["param2"],
+                      "pixel_perfect": data_cn[application_list[current_index].cn3_preset.currentIndex()-1][
                           "pixel_perfect"],
                       }
         item_data["cn3_preset"] = cn3_preset
@@ -330,6 +330,7 @@ def tabs_bind(Main_w,ui_tab_w,application_list):
     all_preset_name = []
     for i in preset_list:
         all_preset_name.append(i["name"])
+    ui_tab_w.preset_combo.clear()
     ui_tab_w.preset_combo.addItems(all_preset_name)
     ui_tab_w.preset_combo.setCurrentIndex(now_preset)
 
@@ -359,6 +360,10 @@ def tabs_bind(Main_w,ui_tab_w,application_list):
     cn_list.append("无")
     for i in data_control:
         cn_list.append(i["name"])
+    ui_tab_w.cn0_preset.clear()
+    ui_tab_w.cn1_preset.clear()
+    ui_tab_w.cn2_preset.clear()
+    ui_tab_w.cn3_preset.clear()
     ui_tab_w.cn0_preset.addItems(cn_list)
     ui_tab_w.cn1_preset.addItems(cn_list)
     ui_tab_w.cn2_preset.addItems(cn_list)
@@ -444,6 +449,7 @@ def import_project(Main_w, application_list):
                 ui_tab_w = tab_window.Ui_Form()
                 ui_tab_w.setupUi(tab_w)
                 tabs_bind(Main_w, ui_tab_w, application_list)
+                application_list.append(ui_tab_w)
                 ui_tab_w.tab_name.setText(i["tab_name"])
                 ui_tab_w.layer_name.setText(i["layer_name"])
 
@@ -458,9 +464,9 @@ def import_project(Main_w, application_list):
                     hd_method = preset_setting[j]["algorithm"]
                     is_hd = preset_setting[j]["continue1"]
                     is_back_ps = preset_setting[j]["continue2"]
-                    hotkey1 = preset_setting[j]["hotkey1"],
-                    hotkey2 = preset_setting[j]["hotkey2"],
-                    hotkey3 = preset_setting[j]["hotkey3"],
+                    hotkey1 = preset_setting[j]["hotkey1"]
+                    hotkey2 = preset_setting[j]["hotkey2"]
+                    hotkey3 = preset_setting[j]["hotkey3"]
                     continue1 = float(preset_setting[j]["interval1"])
                     continue2 = float(preset_setting[j]["interval2"])
                     max_pics = int(preset_setting[j]["max_psi1"])
@@ -474,9 +480,9 @@ def import_project(Main_w, application_list):
                         score += 1
                     if i["hd_method"] == hd_method:
                         score += 1
-                    if i["is_hd"] == is_hd:
+                    if i["continue1"] == is_hd:
                         score += 1
-                    if i["is_back_ps"] == is_back_ps:
+                    if i["continue2"] == is_back_ps:
                         score += 1
                     if i["hotkey1"] == hotkey1:
                         score += 1
@@ -484,9 +490,9 @@ def import_project(Main_w, application_list):
                         score += 1
                     if i["hotkey3"] == hotkey3:
                         score += 1
-                    if i["continue1"] == continue1:
+                    if i["interval1"] == continue1:
                         score += 1
-                    if i["continue2"] == continue2:
+                    if i["interval2"] == continue2:
                         score += 1
                     if i["max_pics"] == max_pics:
                         score += 1
@@ -501,7 +507,6 @@ def import_project(Main_w, application_list):
                     if i["sample"] == sample:
                         score += 1
 
-                    ui_tab_w.preset_combo.addItem(name)
                     if score == 15:
                         is_found_preset = True
                         ui_tab_w.preset_combo.setCurrentIndex(j)
@@ -509,13 +514,13 @@ def import_project(Main_w, application_list):
                 if not is_found_preset:
                     new_present = {"model": i["model"],
                                    "algorithm": i["hd_method"],
-                                   "continue1": i["is_hd"],
-                                   "continue2": i["is_back_ps"],
+                                   "continue1": i["continue1"],
+                                   "continue2": i["continue2"],
                                    "hotkey1": i["hotkey1"],
                                    "hotkey2": i["hotkey2"],
                                    "hotkey3": i["hotkey3"],
-                                   "interval1": i["continue1"],
-                                   "interval2": i["continue2"],
+                                   "interval1": i["interval1"],
+                                   "interval2": i["interval2"],
                                    "max_psi1": i["max_pics"],
                                    "max_psi2": i["max_hd"],
                                    "name": i["name"],
@@ -531,7 +536,7 @@ def import_project(Main_w, application_list):
                         # 将格式化后的 json 字符串写入新的文件
                         f.write(formatted_data)
                     update_preset(application_list)
-                    ui_tab_w.preset_combo.setCurrentIndex(-1)
+                    ui_tab_w.preset_combo.setCurrentIndex(ui_tab_w.preset_combo.count()-1)
 
                 ui_tab_w.add_positive_edit.setText(i["add_positive"])
                 ui_tab_w.add_negative_edit.setText(i["add_negative"])
@@ -572,10 +577,9 @@ def import_project(Main_w, application_list):
                         if pixel_perfect == i["cn0_preset"]["pixel_perfect"]:
                             score += 1
 
-                        ui_tab_w.cn0_preset.addItem(name)
                         if score == 8:
                             is_found_preset = True
-                            ui_tab_w.cn0_preset.setCurrentIndex(j)
+                            ui_tab_w.cn0_preset.setCurrentIndex(j+1)
 
                     if not is_found_preset:
                         new_present = {"enable": i["cn0_preset"]["enable"],
@@ -594,7 +598,9 @@ def import_project(Main_w, application_list):
                             # 将格式化后的 json 字符串写入新的文件
                             f.write(formatted_data)
                         upadate_cn_preset(application_list)
-                        ui_tab_w.cn0_preset.setCurrentIndex(-1)
+                        ui_tab_w.cn0_preset.setCurrentIndex(ui_tab_w.cn0_preset.count()-1)
+                else:
+                    ui_tab_w.cn0_preset.setCurrentIndex(0)
 
                 if i["cn1_enable"]:
                     is_found_preset = False
@@ -626,10 +632,9 @@ def import_project(Main_w, application_list):
                         if pixel_perfect == i["cn1_preset"]["pixel_perfect"]:
                             score += 1
 
-                        ui_tab_w.cn1_preset.addItem(name)
                         if score == 8:
                             is_found_preset = True
-                            ui_tab_w.cn1_preset.setCurrentIndex(j)
+                            ui_tab_w.cn1_preset.setCurrentIndex(j+1)
 
                     if not is_found_preset:
                         new_present = {"enable": i["cn1_preset"]["enable"],
@@ -648,7 +653,9 @@ def import_project(Main_w, application_list):
                             # 将格式化后的 json 字符串写入新的文件
                             f.write(formatted_data)
                         upadate_cn_preset(application_list)
-                        ui_tab_w.cn1_preset.setCurrentIndex(-1)
+                        ui_tab_w.cn1_preset.setCurrentIndex(ui_tab_w.cn1_preset.count()-1)
+                else:
+                    ui_tab_w.cn1_preset.setCurrentIndex(0)
 
                 if i["cn2_enable"]:
                     is_found_preset = False
@@ -680,10 +687,9 @@ def import_project(Main_w, application_list):
                         if pixel_perfect == i["cn2_preset"]["pixel_perfect"]:
                             score += 1
 
-                        ui_tab_w.cn2_preset.addItem(name)
                         if score == 8:
                             is_found_preset = True
-                            ui_tab_w.cn2_preset.setCurrentIndex(j)
+                            ui_tab_w.cn2_preset.setCurrentIndex(j+1)
 
                     if not is_found_preset:
                         new_present = {"enable": i["cn2_preset"]["enable"],
@@ -702,7 +708,9 @@ def import_project(Main_w, application_list):
                             # 将格式化后的 json 字符串写入新的文件
                             f.write(formatted_data)
                         upadate_cn_preset(application_list)
-                        ui_tab_w.cn2_preset.setCurrentIndex(-1)
+                        ui_tab_w.cn2_preset.setCurrentIndex(ui_tab_w.cn2_preset.count()-1)
+                else:
+                    ui_tab_w.cn2_preset.setCurrentIndex(0)
 
                 if i["cn3_enable"]:
                     is_found_preset = False
@@ -734,10 +742,9 @@ def import_project(Main_w, application_list):
                         if pixel_perfect == i["cn3_preset"]["pixel_perfect"]:
                             score += 1
 
-                        ui_tab_w.cn3_preset.addItem(name)
                         if score == 8:
                             is_found_preset = True
-                            ui_tab_w.cn3_preset.setCurrentIndex(j)
+                            ui_tab_w.cn3_preset.setCurrentIndex(j+1)
 
                     if not is_found_preset:
                         new_present = {"enable": i["cn3_preset"]["enable"],
@@ -756,9 +763,10 @@ def import_project(Main_w, application_list):
                             # 将格式化后的 json 字符串写入新的文件
                             f.write(formatted_data)
                         upadate_cn_preset(application_list)
-                        ui_tab_w.cn3_preset.setCurrentIndex(-1)
+                        ui_tab_w.cn3_preset.setCurrentIndex(ui_tab_w.cn3_preset.count()-1)
+                else:
+                    ui_tab_w.cn3_preset.setCurrentIndex(0)
                 ui_tab_w.lama_url.setText(i["lama_url"])
                 Main_w.add_tab(ui_tab_w,tab_w)
-                application_list.append(ui_tab_w)
     except FileNotFoundError:
         data = None

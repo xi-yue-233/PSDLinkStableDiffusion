@@ -180,8 +180,8 @@ class small_windows(QMainWindow):
         # self.ui.tabWidget.clear()
         self.index = 0
         while self.ui.tabWidget.count() > 1:
-            self.ui.tabWidget.removeTab(self.ui.tabWidget.currentIndex())
             self.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.currentIndex() - 1)
+            self.ui.tabWidget.removeTab(self.ui.tabWidget.currentIndex())
         application_small_list.clear()
         for i in application_list:
             self.index = self.index + 1
@@ -454,7 +454,7 @@ class Main_windows(QMainWindow):
         index = index + 1
         # 注册工程窗口
         if tab != None:
-            self.ui.tabWidget.insertTab(self.ui.tabWidget.count() - 1, tab_w, tab.tab_name.text())
+            self.ui.tabWidget.insertTab(self.ui.tabWidget.count() -1, tab_w, tab.tab_name.text())
             self.ui.tabWidget.setTabsClosable(True)
             # 把视图指向最新一个tab
             self.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.count() - 2)
@@ -465,7 +465,7 @@ class Main_windows(QMainWindow):
             self.ui_tab_w.setupUi(self.tab_w)
             # 连接tab上的元素
             self.tabs_bind()
-            self.ui.tabWidget.insertTab(self.ui.tabWidget.count() - 1, self.tab_w, "任务" + str(index))
+            self.ui.tabWidget.insertTab(self.ui.tabWidget.count() -1, self.tab_w, "任务" + str(index))
             self.ui.tabWidget.setTabsClosable(True)
             self.ui_tab_w.tab_name.setText("任务" + str(index))
 
@@ -474,6 +474,7 @@ class Main_windows(QMainWindow):
             # 把当前的tab加入application_list
             application_list.append(self.ui_tab_w)
             print(f"增加新任务 任务{index}")
+        # print(self.ui.tabWidget.currentIndex())
 
     def init_tab(self):
         """
@@ -840,12 +841,12 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     check_is_sound()
     check_pswindow()
+    # 查看是否透明
+    check_opacity()
     w = Main_windows()
     # w.show()
     # 查看昼夜模式
     check_is_night()
-    # 查看是否透明
-    check_opacity()
     night_theme()
     # 设置为置顶
     toggle_topmost(w)
