@@ -82,8 +82,10 @@ def import_to_sd(application_list):
                         if application_list[i].is_use_translate.isChecked():
                             time.sleep(continue2)
                             print(f"{application_list[i].tab_name.text()} 执行翻译")
-                            add_positive = translate(driver, add_positive)
-                            add_negative = translate(driver, add_negative)
+                            if add_positive!="":
+                                add_positive = translate(driver, add_positive)
+                            if add_negative!="":
+                                add_negative = translate(driver, add_negative)
                     else:
                         raise StopException
                     time.sleep(continue2)
@@ -149,7 +151,7 @@ def import_to_sd(application_list):
 
                     # 设置输出图片的长宽
                     if running_variable.running:
-                        width, height = set_width_height(driver, img_path, max_pics)
+                        width, height = set_width_height(driver, img_path_list[i], max_pics)
                     else:
                         raise StopException
                     time.sleep(continue2)
@@ -237,7 +239,7 @@ def import_to_sd(application_list):
                     if application_list[i].is_hd.isChecked():
                         if running_variable.running:
                             time.sleep(continue2)
-                            is_satisfy_zoom = SD_scale(driver, img_path, lim_sd_scale=max_hd, width=width,
+                            is_satisfy_zoom = SD_scale(driver, img_path_list[i], lim_sd_scale=max_hd, width=width,
                                                        height=height,
                                                        model=hd_method)
                         else:
@@ -376,8 +378,10 @@ def short_key_import_to_sd(application_list, current_tab):
             if application_list[current_tab].is_use_translate.isChecked():
                 time.sleep(continue2)
                 print(f"{application_list[current_tab].tab_name.text()} 执行翻译")
-                add_positive = translate(driver, add_positive)
-                add_negative = translate(driver, add_negative)
+                if add_positive != "":
+                    add_positive = translate(driver, add_positive)
+                if add_negative != "":
+                    add_negative = translate(driver, add_negative)
         else:
             raise StopException
         time.sleep(continue2)
