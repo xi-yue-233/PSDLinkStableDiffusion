@@ -147,7 +147,7 @@ class small_windows(QMainWindow):
         self.parent.ui.tabWidget.removeTab(n)
         self.parent.ui.tabWidget.setCurrentIndex(n - 1)
         # 把当前的tab从application_list删除
-        application_list.pop()
+        application_list.pop(n)
 
     def add_tab(self):
         global index
@@ -446,7 +446,7 @@ class Main_windows(QMainWindow):
         self.ui.tabWidget.removeTab(n)
         self.ui.tabWidget.setCurrentIndex(n - 1)
         # 把当前的tab从application_list删除
-        application_list.pop()
+        application_list.pop(n)
 
     def add_tab(self, tab=None, tab_w=None):
         # 在次末尾处添加
