@@ -1,9 +1,12 @@
 import os
 
 import sys
+import time
+from _ctypes import COMError
 from datetime import datetime
 
 import photoshop.api as ps
+import pythoncom
 from photoshop import Session
 from PIL import Image
 
@@ -13,6 +16,28 @@ def start_ps():
     app = ps.Application()
     return app
 
+#执行动作
+def execute_action(action_name,group_name):
+    pythoncom.CoInitialize()  # 初始化com环境
+    try:
+        with Session() as ps:
+            desc69=ps.ActionDescriptor
+            ref22=ps.ActionReference
+            idactn=ps.app.charIDToTypeID('Actn')
+            ref22.putName(idactn,action_name)
+            ref22.putName(ps.app.charIDToTypeID("ASet"),group_name)
+            desc69.putReference(ps.app.charIDToTypeID("null"),ref22)
+            try:
+                ps.app.executeAction(ps.app.charIDToTypeID("Ply "),desc69,ps.DialogModes.DisplayNoDialogs)
+            except COMError:
+                BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
+                os.system('chcp 65001')
+                os.system(f"cd {BASE_PATH} && start PSDLink动作.atn")
+                print("发现未导入动作，导入动作")
+                time.sleep(1.5)
+                ps.app.executeAction(ps.app.charIDToTypeID("Ply "), desc69, ps.DialogModes.DisplayNoDialogs)
+    finally:
+        pythoncom.CoInitialize()  # 初始化com环境
 
 # 自动匹配ps文档和tabs文档名
 def auto_doc_name(application,small_application=None):
@@ -50,7 +75,7 @@ def export_image_from_ps(app, document_name):
         os.mkdir(EXPORT_PATH)
     # 循环查找指定的文档名
     for document in documents:
-        if document_name in document.name:
+        if document_name == document.name[0:len(document_name)]:
             document.saveAs(os.path.join(EXPORT_PATH, document_name + f"-{now_long}.jpg"), options)
             return os.path.join(EXPORT_PATH, document_name + f"-{now_long}.jpg"), document_name + f"-{now_long}"
     # 如果没找到指定文档，则默认以当前文档导出
@@ -84,7 +109,7 @@ def import_image_from_sd(app, img_name, count):
     document_name = img_name.split("-")[0]
     # 循环查找指定的文档名
     for document in documents:
-        if document_name in document.name:
+        if document_name == document.name[0:len(document_name)]:
             # 获取文档的宽度和高度
             doc_width = document.width
             doc_height = document.height
@@ -165,7 +190,7 @@ def export_controlnet_image_from_ps(app, document_name):
         os.mkdir(EXPORT_PATH)
     # 循环查找指定的文档名
     for document in documents:
-        if document_name in document.name:
+        if document_name == document.name[0:len(document_name)]:
             document.saveAs(os.path.join(EXPORT_PATH, document_name + f"-{now_long}" + "-controlnet.jpg"), options)
             return os.path.join(EXPORT_PATH, document_name + f"-{now_long}" + "-controlnet.jpg")
     # 如果没找到指定文档，则默认以当前文档导出

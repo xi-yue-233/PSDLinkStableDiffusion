@@ -21,6 +21,7 @@ from playsound import check_is_sound, repair_is_sound
 from ps_tools import auto_doc_name
 from save_import_project import save_project, import_project, save_project_self
 from set_cn_preset import set_cn_win
+from set_key_window import open_key_preset
 from setting_preset import open_set_preset
 from tool_bar_method import *
 
@@ -30,8 +31,10 @@ from update_combo import update_preset, upadate_cn_preset
 application_list = []
 application_small_list = []
 index = 0
-is_block=False
-ispswindow=False
+is_block = False
+ispswindow = False
+is_exit = False
+
 
 # PS插件窗口
 class small_windows(QMainWindow):
@@ -72,7 +75,7 @@ class small_windows(QMainWindow):
         BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
         with open(os.path.join(BASE_PATH, "config.json"), "r") as f:
             data = json.load(f)
-            self.move(data["save_x"],data["save_y"])
+            self.move(data["save_x"], data["save_y"])
 
     def change_to_Main_w(self, parent):
         repair_pswindow(False)
@@ -313,8 +316,8 @@ class small_windows(QMainWindow):
         self.ui.action_optop.triggered.connect(lambda: [toggle_topmost(self), toggle_topmost(parent), parent.hide()])
         self.ui.action_to_night_2.triggered.connect(lambda: repair_is_night(True))
         self.ui.action_to_early.triggered.connect(lambda: repair_is_night(False))
-        self.ui.actionopcacity_true.triggered.connect(lambda: repair_is_opacity(True,self))
-        self.ui.actionopcacity_false.triggered.connect(lambda: repair_is_opacity(False,self))
+        self.ui.actionopcacity_true.triggered.connect(lambda: repair_is_opacity(True, self))
+        self.ui.actionopcacity_false.triggered.connect(lambda: repair_is_opacity(False, self))
 
         # 绑定副窗口工作栏功能
         # self.ui_small.action_to_main_win.triggered.connect(lambda: self.change_main_window())
@@ -326,6 +329,9 @@ class small_windows(QMainWindow):
         # 设置是否播放声音
         self.ui.actionyinpin_start.triggered.connect(lambda: repair_is_sound(True))
         self.ui.actionyinpin_stop.triggered.connect(lambda: repair_is_sound(False))
+
+        # 快捷键设置
+        self.ui.actionset_key.triggered.connect(lambda: open_key_preset(parent))
 
         # 存档
         self.ui.actionsave.triggered.connect(lambda: save_project(parent, application_list))
@@ -344,10 +350,14 @@ class small_windows(QMainWindow):
         def check_block():
             global is_block
             is_block = self.ui.is_block_short_key.isChecked()
-        self.ui.is_block_short_key.stateChanged.connect(lambda: [check_block(),parent.block_all_short_key()])
+            parent.block_all_short_key()
+
+        self.ui.is_block_short_key.stateChanged.connect(lambda: check_block())
 
     def closeEvent(self, event):
         try:
+            global is_exit
+            is_exit = True
             BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
             with open(os.path.join(BASE_PATH, "config.json"), "r") as f:
                 data = json.load(f)
@@ -367,6 +377,7 @@ class small_windows(QMainWindow):
             event.accept()
         except:
             event.accept()
+
 
 class EmittingStr(QtCore.QObject):
     textWritten = QtCore.pyqtSignal(str)  # 定义一个发送str的信号
@@ -402,7 +413,6 @@ class Main_windows(QMainWindow):
         self.ui.tabWidget.tabCloseRequested.connect(self.close_tab)
 
         self.block_all_short_key()
-
 
     def first_boot(self):
         global ispswindow
@@ -454,7 +464,7 @@ class Main_windows(QMainWindow):
         index = index + 1
         # 注册工程窗口
         if tab != None:
-            self.ui.tabWidget.insertTab(self.ui.tabWidget.count() -1, tab_w, tab.tab_name.text())
+            self.ui.tabWidget.insertTab(self.ui.tabWidget.count() - 1, tab_w, tab.tab_name.text())
             self.ui.tabWidget.setTabsClosable(True)
             # 把视图指向最新一个tab
             self.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.count() - 2)
@@ -465,7 +475,7 @@ class Main_windows(QMainWindow):
             self.ui_tab_w.setupUi(self.tab_w)
             # 连接tab上的元素
             self.tabs_bind()
-            self.ui.tabWidget.insertTab(self.ui.tabWidget.count() -1, self.tab_w, "任务" + str(index))
+            self.ui.tabWidget.insertTab(self.ui.tabWidget.count() - 1, self.tab_w, "任务" + str(index))
             self.ui.tabWidget.setTabsClosable(True)
             self.ui_tab_w.tab_name.setText("任务" + str(index))
 
@@ -600,6 +610,10 @@ class Main_windows(QMainWindow):
         else:
             print("当前已经有任务在运行了")
 
+    # 批量创建多任务层
+    def create_tasks_method(self):
+        threading.Thread(target=create_tasks).start()
+
     # 中止当前任务
     def stop(self):
         running_variable.running = False
@@ -613,8 +627,8 @@ class Main_windows(QMainWindow):
         self.ui.action_to_night_2.triggered.connect(lambda: repair_is_night(True))
         self.ui.action_to_early.triggered.connect(lambda: repair_is_night(False))
         self.ui.action_to_by_win.triggered.connect(lambda: self.init_sub_win())
-        self.ui.actionopcacity_true.triggered.connect(lambda: repair_is_opacity(True,self))
-        self.ui.actionopcacity_false.triggered.connect(lambda: repair_is_opacity(False,self))
+        self.ui.actionopcacity_true.triggered.connect(lambda: repair_is_opacity(True, self))
+        self.ui.actionopcacity_false.triggered.connect(lambda: repair_is_opacity(False, self))
 
         # 绑定副窗口工作栏功能
         # self.ui_small.action_to_main_win.triggered.connect(lambda: self.change_main_window())
@@ -626,6 +640,9 @@ class Main_windows(QMainWindow):
         # 设置是否播放声音
         self.ui.actionyinpin_start.triggered.connect(lambda: repair_is_sound(True))
         self.ui.actionyinpin_stop.triggered.connect(lambda: repair_is_sound(False))
+
+        # 快捷键设置
+        self.ui.actionset_key.triggered.connect(lambda: open_key_preset(self))
 
         # 存档
         self.ui.actionsave.triggered.connect(lambda: save_project(self, application_list))
@@ -642,31 +659,67 @@ class Main_windows(QMainWindow):
         def check_block():
             global is_block
             is_block = self.ui.is_block_short_key.isChecked()
-        self.ui.is_block_short_key.stateChanged.connect(lambda: [check_block(),self.block_all_short_key()])
+            self.block_all_short_key()
+
+        self.ui.is_block_short_key.stateChanged.connect(lambda: check_block())
 
     def block_all_short_key(self):
         global is_block
         # 开启状态屏蔽掉所有快捷键
+        BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
+        with open(os.path.join(BASE_PATH, "config.json"), "r") as f:
+            data = json.load(f)
+            if "gaopin_key" not in data:
+                data["gaopin_key"] = "shift+f4"
+            if "dipin_key" not in data:
+                data["dipin_key"] = "shift+f3"
+            if "lama_export" not in data:
+                data["lama_export"] = "ctrl+shift+f3"
+            if "lama_import" not in data:
+                data["lama_import"] = "ctrl+shift+f4"
+            if "yingdiao" not in data:
+                data["yingdiao"] = "ctrl+shift+d"
+            if "baohe" not in data:
+                data["baohe"] = "ctrl+shift+f"
+            setting = data["settings"][application_list[self.ui.tabWidget.currentIndex()].preset_combo.currentIndex()]
+        with open(os.path.join(BASE_PATH, "config.json"), "w") as f:
+            # 将 python 字典转换为 json 字符串，并指定缩进为 4 个空格
+            formatted_data = json.dumps(data, indent=4)
+            # 将格式化后的 json 字符串写入新的文件
+            f.write(formatted_data)
         if is_block:
             try:
                 keyboard.unhook_all_hotkeys()
+                keyboard.add_hotkey(setting["hotkey1"],
+                                    lambda: self.create_tasks_method())
+                print(f"切换至屏蔽快捷键模式，此模式下框选住想要执行的区域，使用{setting['hotkey1']}快捷键可以快速创建多任务文档")
             except:
                 pass
         # 取消屏蔽状态后更新当前页面的快捷键
         else:
-            BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
-            with open(os.path.join(BASE_PATH, "config.json"), "r") as f:
-                data = json.load(f)
-                setting = data["settings"][application_list[self.ui.tabWidget.currentIndex()].preset_combo.currentIndex()]
             try:
                 keyboard.unhook_all_hotkeys()
             except:
                 pass
-            keyboard.add_hotkey(setting["hotkey1"], lambda: self.short_key_import_sd())
+            keyboard.add_hotkey(setting["hotkey1"], lambda: [execute_action("sd修图", "sd"), self.short_key_import_sd()])
             keyboard.add_hotkey(setting["hotkey2"], lambda: self.import_back_ps())
             keyboard.add_hotkey(setting["hotkey3"], lambda: self.start_caculate())
-            keyboard.add_hotkey("ctrl+shift+f3", lambda: self.Lama_import())
-            keyboard.add_hotkey("ctrl+shift+f4", lambda: self.Lama_export())
+            keyboard.add_hotkey(data["gaopin_key"], lambda: [execute_action("高频层", "sd"),print("创建高频层")])
+            keyboard.add_hotkey(data["dipin_key"], lambda: [execute_action("低频层", "sd"),print("创建低频层")])
+            keyboard.add_hotkey(data["lama_export"], lambda: [execute_action("lama导入", "sd"), self.Lama_import()])
+            keyboard.add_hotkey(data["lama_import"], lambda: self.Lama_export())
+            keyboard.add_hotkey(data["yingdiao"], lambda: [execute_action("影调观察层", "sd"),print("创建影调观察层")])
+            keyboard.add_hotkey(data["baohe"], lambda: [execute_action("饱和度观察层", "sd"),print("创建饱和度观察层")])
+            print("快捷鍵开启,请检查ps内动作快捷键是否有冲突！！！")
+            print(f"执行全流程快捷键{setting['hotkey1']}")
+            print(f"传回ps快捷键{setting['hotkey2']}")
+            print(f"开始运算快捷键{setting['hotkey3']}")
+            print(f"快速创建高频层快捷键{data['gaopin_key']}")
+            print(f"快速创建低频层快捷键{data['dipin_key']}")
+            print(f"lama导入快捷键{data['lama_export']}")
+            print(f"lama导回快捷键{data['lama_import']}")
+            print(f"影调观察层快捷键{data['yingdiao']}")
+            print(f"饱和度观察层快捷键{data['baohe']}")
 
     def init_sub_win(self):
         repair_pswindow(True)
@@ -726,7 +779,8 @@ class Main_windows(QMainWindow):
         self.ui_tab_w.cn3_preset.setCurrentIndex(0)
 
         # 设置lama url
-        self.ui_tab_w.lama_url.setText(data["lama_url"])
+        if "lama_url" in data:
+            self.ui_tab_w.lama_url.setText(data["lama_url"])
 
         # 连接tab上的预设设置按钮
         self.ui_tab_w.set_preset.clicked.connect(
@@ -786,6 +840,8 @@ class Main_windows(QMainWindow):
 
     def closeEvent(self, event):
         try:
+            global is_exit
+            is_exit = True
             BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
             with open(os.path.join(BASE_PATH, "config.json"), "r") as f:
                 data = json.load(f)
@@ -816,11 +872,19 @@ def check_pswindow():
     BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
     with open(os.path.join(BASE_PATH, "config.json"), "r") as f:
         data = json.load(f)
-    ispswindow=data["ispswindow"]
+    if "ispswindow" not in data:
+        data["ispswindow"]=False
+        with open(os.path.join(BASE_PATH, "config.json"), "w") as f:
+            # 将 python 字典转换为 json 字符串，并指定缩进为 4 个空格
+            formatted_data = json.dumps(data, indent=4)
+            # 将格式化后的 json 字符串写入新的文件
+            f.write(formatted_data)
+    ispswindow = data["ispswindow"]
+
 
 def repair_pswindow(is_ps):
     global ispswindow
-    ispswindow=is_ps
+    ispswindow = is_ps
     if is_ps:
         print("更改为ps插件窗口")
     else:
@@ -828,17 +892,35 @@ def repair_pswindow(is_ps):
     BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
     with open(os.path.join(BASE_PATH, "config.json"), "r") as f:
         data = json.load(f)
-        data["ispswindow"]=is_ps
+        data["ispswindow"] = is_ps
     with open(os.path.join(BASE_PATH, "config.json"), "w") as f:
         # 将 python 字典转换为 json 字符串，并指定缩进为 4 个空格
         formatted_data = json.dumps(data, indent=4)
         # 将格式化后的 json 字符串写入新的文件
         f.write(formatted_data)
 
+
+def clear_keys():
+    while True:
+        # Hotkeys stop working after windows locks & unlocks
+        # https://github.com/boppreh/keyboard/issues/223
+        deleted = []
+        with keyboard._pressed_events_lock:
+            for k in list(keyboard._pressed_events.keys()):
+                item = keyboard._pressed_events[k]
+                if time.time() - item.time > 2:
+                    deleted.append(item.name)
+                    del keyboard._pressed_events[k]
+        if is_exit:
+            return 0
+        time.sleep(1)
+
+
 if __name__ == '__main__':
     QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
     sys.excepthook = exceptOutConfig
     app = QApplication(sys.argv)
+    threading.Thread(target=clear_keys).start()
     check_is_sound()
     check_pswindow()
     # 查看是否透明

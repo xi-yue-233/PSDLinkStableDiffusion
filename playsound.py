@@ -10,6 +10,13 @@ def check_is_sound():
     BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
     with open(os.path.join(BASE_PATH, "config.json"), "r") as f:
         data = json.load(f)
+    if "isplaysound" not in data:
+        data["isplaysound"]=True
+        with open(os.path.join(BASE_PATH, "config.json"), "w") as f:
+            # 将 python 字典转换为 json 字符串，并指定缩进为 4 个空格
+            formatted_data = json.dumps(data, indent=4)
+            # 将格式化后的 json 字符串写入新的文件
+            f.write(formatted_data)
     isplaysound=data["isplaysound"]
 
 def playsound():

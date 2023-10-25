@@ -132,5 +132,11 @@
     "isopacity": false,
     "lama_url": "1",
     "save_x": 1532,
-    "save_y": 192
+    "save_y": 192,
+    "gaopin_key": "shift+f4",
+    "dipin_key": "shift+f3",
+    "lama_export": "ctrl+shift+f3",
+    "lama_import": "ctrl+shift+f4",
+    "yingdiao": "ctrl+shift+d",
+    "baohe": "ctrl+shift+f"
 }

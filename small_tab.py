@@ -180,7 +180,7 @@ class Ui_Form(object):
         self.lama_import.setToolTip(_translate("Form", "快捷键ctrl+shift+F4"))
         self.lama_import.setText(_translate("Form", "Lama导回"))
         self.import_sd_btn.setToolTip(_translate("Form", "按照任务设定从ps当前的文档导出图片进入sd执行"))
-        self.import_sd_btn.setText(_translate("Form", "导入SD"))
+        self.import_sd_btn.setText(_translate("Form", "执行全流程"))
         self.start_cal_btn.setToolTip(_translate("Form", "直接触发sd的开始按钮并在完成后导回sd"))
         self.start_cal_btn.setText(_translate("Form", "开始运算"))
         self.hd_btn.setToolTip(_translate("Form", "用当前的设定对网页上生成好的图片进行sd放大"))

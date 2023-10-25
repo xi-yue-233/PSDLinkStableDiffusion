@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>491</width>
-    <height>524</height>
+    <height>528</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -352,7 +352,7 @@
        <string>按照任务设定从ps当前的文档导出图片进入sd执行</string>
       </property>
       <property name="text">
-       <string>导入SD</string>
+       <string>执行全流程</string>
       </property>
      </widget>
     </item>

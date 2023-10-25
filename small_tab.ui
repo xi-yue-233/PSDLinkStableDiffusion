@@ -473,7 +473,7 @@
     <string>按照任务设定从ps当前的文档导出图片进入sd执行</string>
    </property>
    <property name="text">
-    <string>导入SD</string>
+    <string>执行全流程</string>
    </property>
   </widget>
   <widget class="QPushButton" name="start_cal_btn">

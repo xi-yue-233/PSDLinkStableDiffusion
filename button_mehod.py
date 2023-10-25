@@ -19,6 +19,22 @@ class All_running_StopException(Exception):
     pass
 
 
+def create_tasks():
+    pythoncom.CoInitialize()  # 初始化com环境
+    try:
+        app=start_ps()
+        documents = app.documents
+        document_name = app.activeDocument.name
+        execute_action("sd修图", "sd")
+        for document in documents:
+            if document_name == document.name:
+                break
+        execute_action("返回上一个图层", "sd")
+        print("创建新图层任务")
+    finally:
+        pythoncom.CoInitialize()  # 初始化com环境
+
+
 def import_to_sd(application_list):
     pythoncom.CoInitialize()  # 初始化com环境
     try:
@@ -82,9 +98,9 @@ def import_to_sd(application_list):
                         if application_list[i].is_use_translate.isChecked():
                             time.sleep(continue2)
                             print(f"{application_list[i].tab_name.text()} 执行翻译")
-                            if add_positive!="":
+                            if add_positive != "":
                                 add_positive = translate(driver, add_positive)
-                            if add_negative!="":
+                            if add_negative != "":
                                 add_negative = translate(driver, add_negative)
                     else:
                         raise StopException
@@ -1418,7 +1434,8 @@ def lama_upload(application_list, current_tab):
 
         time.sleep(continue2)
         if running_variable.running:
-            upload_img_to_lama(ps, driver, application_list[current_tab].lama_url.text(),application_list[current_tab].layer_name.text())
+            upload_img_to_lama(ps, driver, application_list[current_tab].lama_url.text(),
+                               application_list[current_tab].layer_name.text())
             print(f"{application_list[current_tab].tab_name.text()} 上传Lama图片成功")
         else:
             raise StopException
@@ -1438,6 +1455,7 @@ def lama_upload(application_list, current_tab):
         traceback.print_exc()
     finally:
         pythoncom.CoUninitialize()  # 清理com环境
+
 
 def lama_download(application_list, current_tab):
     try:
@@ -1481,7 +1499,8 @@ def lama_download(application_list, current_tab):
 
         time.sleep(continue2)
         if running_variable.running:
-            download_img_from_lama(ps, driver, application_list[current_tab].lama_url.text(),application_list[current_tab].layer_name.text())
+            download_img_from_lama(ps, driver, application_list[current_tab].lama_url.text(),
+                                   application_list[current_tab].layer_name.text())
             print(f"{application_list[current_tab].tab_name.text()} 传回Lama图片成功")
         else:
             raise StopException

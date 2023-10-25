@@ -163,6 +163,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </widget>
     <addaction name="menub"/>
     <addaction name="menu_7"/>
+    <addaction name="actionset_key"/>
    </widget>
    <widget class="QMenu" name="menu_6">
     <property name="title">
@@ -261,6 +262,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <action name="actionopcacity_false">
    <property name="text">
     <string>半透明</string>
+   </property>
+  </action>
+  <action name="actionset_key">
+   <property name="text">
+    <string>设置快捷键</string>
    </property>
   </action>
  </widget>
