@@ -14,21 +14,21 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(838, 604)
+        MainWindow.resize(838, 777)
         MainWindow.setIconSize(QtCore.QSize(24, 24))
         MainWindow.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
         MainWindow.setDocumentMode(False)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
-        self.tabWidget.setGeometry(QtCore.QRect(10, 10, 501, 561))
+        self.tabWidget.setGeometry(QtCore.QRect(10, 10, 501, 731))
         self.tabWidget.setStyleSheet("")
         self.tabWidget.setObjectName("tabWidget")
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
         self.tabWidget.addTab(self.tab, "")
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.textBrowser.setGeometry(QtCore.QRect(520, 30, 311, 541))
+        self.textBrowser.setGeometry(QtCore.QRect(520, 30, 311, 711))
         self.textBrowser.setObjectName("textBrowser")
         self.is_block_short_key = QtWidgets.QCheckBox(self.centralwidget)
         self.is_block_short_key.setGeometry(QtCore.QRect(510, 0, 111, 19))
@@ -41,7 +41,7 @@ class Ui_MainWindow(object):
         self.stop_all.setObjectName("stop_all")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 838, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 838, 22))
         self.menubar.setObjectName("menubar")
         self.menu = QtWidgets.QMenu(self.menubar)
         self.menu.setObjectName("menu")
@@ -130,13 +130,10 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Tab 1"))
         self.textBrowser.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:\'Microsoft YaHei UI\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'SimSun\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Microsoft YaHei UI\';\"><br /></p></body></html>"))
         self.is_block_short_key.setToolTip(_translate("MainWindow", "暂时屏蔽快捷键以便进行生成区域选定，创建多个AI导出文档"))
         self.is_block_short_key.setText(_translate("MainWindow", "暂时屏蔽快捷键"))
         self.start_all.setToolTip(_translate("MainWindow", "对当前所有任务进行顺序流水线执行"))

@@ -5,6 +5,8 @@
 
 ## 介绍
 
+<font size=4>现已支持Forge版本API</font>
+
 用于连接PSD和Stable diffusion的软件（加入连接Lama Cleaner的功能），方便修图，
 需配合云端服务器或者本地秋叶包使用，理论上支持1.5之后的版本，
 云端可在Autodl社区服务器搜索“StableDiffusionForPhotoshop”使用开源镜像。
@@ -17,11 +19,11 @@
 
 ## 特性
 
-<font size=20>·</font>相比起原版“臭猫”更好看的UI界面，支持大UI主界面和PS插件界面的切换，支持昼夜模式、半透明切换
-![image](https://github.com/xi-yue-233/PSDLinkStableDiffusion/assets/58218656/4e154181-608c-4c33-be68-02a55fb8c287)
-![image](https://github.com/xi-yue-233/PSDLinkStableDiffusion/assets/58218656/fa527010-b3a9-4df5-aff7-9171865e30af)
-![image](https://github.com/xi-yue-233/PSDLinkStableDiffusion/assets/58218656/9fad38b6-7de9-4732-a330-d23388f680b9)
-![image](https://github.com/xi-yue-233/PSDLinkStableDiffusion/assets/58218656/1114bd6c-6c30-444d-9085-eaaf1f7e781f)
+<font size=20>·</font><font size=3>支持大UI主界面和PS插件界面的切换，支持昼夜模式、半透明切换</font>
+![img.png](img.png)
+![img_1.png](img_1.png)
+![img_2.png](img_2.png)
+![img_3.png](img_3.png)
 
 <font size=20>·</font>支持存档功能，将当前设定好的预设保存为工程文件，方便下次使用，或者分享给他人使用
 ![image](https://github.com/xi-yue-233/PSDLinkStableDiffusion/assets/58218656/e9ecd08e-2802-4f87-88f9-e94e3fc72421)

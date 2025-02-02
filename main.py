@@ -18,7 +18,7 @@ import tab_window
 from add_preset_win import add_preset_win, add_cn_preset_win
 from button_mehod import *
 from playsound import check_is_sound, repair_is_sound
-from ps_tools import auto_doc_name
+from ps_tools import auto_doc_name,update_first_word,translate_api, update_prompt_text
 from save_import_project import save_project, import_project, save_project_self
 from set_cn_preset import set_cn_win
 from set_key_window import open_key_preset
@@ -76,6 +76,7 @@ class small_windows(QMainWindow):
         with open(os.path.join(BASE_PATH, "config.json"), "r") as f:
             data = json.load(f)
             self.move(data["save_x"], data["save_y"])
+
 
     def change_to_Main_w(self, parent):
         repair_pswindow(False)
@@ -178,6 +179,60 @@ class small_windows(QMainWindow):
         else:
             self.ui.tabWidget.setCurrentIndex(0)
 
+
+    def add_positive_text(self, index):
+        """添加正面提示词"""
+        current_text = application_small_list[index].positive_textEdit.toPlainText()
+        add_text = application_small_list[index].add_positive_edit.text()
+        if add_text:
+            if current_text:
+                new_text = current_text + ", " + add_text
+            else:
+                new_text = add_text
+            application_small_list[index].positive_textEdit.setText(new_text)
+            application_small_list[index].add_positive_edit.clear()
+
+    def trans_positive_text(self, index):
+        """翻译正面提示词"""
+        # 这里需要接入翻译API
+        text = application_small_list[index].add_positive_edit.text()
+        translated_text = translate_api(text)  # 需要实现翻译功能
+        application_small_list[index].add_positive_edit.setText(translated_text)
+
+    def add_positive_weight(self, index):
+        """添加正面提示词权重"""
+        text = application_small_list[index].add_positive_edit.text()
+        if text:
+            weighted_text = update_first_word(text)
+            application_small_list[index].add_positive_edit.setText(weighted_text)
+
+    def add_negative_text(self, index):
+        """添加负面提示词"""
+        current_text = application_small_list[index].negative_textEdit.toPlainText()
+        add_text = application_small_list[index].add_negative_edit.text()
+        
+        if add_text:
+            if current_text:
+                new_text = current_text + ", " + add_text
+            else:
+                new_text = add_text
+            application_small_list[index].negative_textEdit.setText(new_text)
+            application_small_list[index].add_negative_edit.clear()
+
+    def trans_negative_text(self, index):
+        """翻译负面提示词"""
+        # 这里需要接入翻译API
+        text = application_small_list[index].add_negative_edit.text()
+        translated_text = translate_api(text)  # 需要实现翻译功能
+        application_small_list[index].add_negative_edit.setText(translated_text)
+
+    def add_negative_weight(self, index):
+        """添加负面提示词权重"""
+        text = application_small_list[index].add_negative_edit.text()
+        if text:
+            weighted_text = update_first_word(text)
+            application_small_list[index].add_negative_edit.setText(weighted_text)
+
     def trans_main_to_small(self, parent):
         # 转化主页面的元素为小窗口元素
         # self.ui.tabWidget.clear()
@@ -194,12 +249,18 @@ class small_windows(QMainWindow):
             # 连接tab上的元素
             # self.tabs_bind()
             self.ui_tab_w.layer_name.setText(i.layer_name.text())
+
+            # 连接提示词处理按钮，使用 lambda 传递固定的索引值
+            current_index = len(application_small_list)  # 使用当前列表长度作为索引
+    
+
             for j in range(i.preset_combo.count()):
                 self.ui_tab_w.preset_combo.addItem(i.preset_combo.itemText(j))
             self.ui_tab_w.preset_combo.setCurrentIndex(i.preset_combo.currentIndex())
+            self.ui_tab_w.positive_textEdit.setText(i.positive_textEdit.toPlainText())
             self.ui_tab_w.add_positive_edit.setText(i.add_positive_edit.text())
+            self.ui_tab_w.negative_textEdit.setText(i.negative_textEdit.toPlainText())
             self.ui_tab_w.add_negative_edit.setText(i.add_negative_edit.text())
-            self.ui_tab_w.is_use_translate.setChecked(i.is_use_translate.isChecked())
             self.ui_tab_w.paint_weight.setText(i.paint_weight.text())
             self.ui_tab_w.paint_count.setText(i.paint_count.text())
             self.ui_tab_w.webui_url.setText(i.webui_url.text())
@@ -224,15 +285,25 @@ class small_windows(QMainWindow):
             self.ui_tab_w.preset_combo.currentIndexChanged.connect(
                 lambda: application_list[self.ui.tabWidget.currentIndex()].preset_combo.setCurrentIndex(
                     application_small_list[self.ui.tabWidget.currentIndex()].preset_combo.currentIndex()))
+            self.ui_tab_w.preset_combo.currentIndexChanged.connect(lambda: update_prompt_text(
+                application_small_list[self.ui.tabWidget.currentIndex()].preset_combo, 
+                application_small_list[self.ui.tabWidget.currentIndex()].positive_textEdit,
+                application_small_list[self.ui.tabWidget.currentIndex()].negative_textEdit))
+            update_prompt_text(self.ui_tab_w.preset_combo, 
+                self.ui_tab_w.positive_textEdit,
+                self.ui_tab_w.negative_textEdit)
+            self.ui_tab_w.positive_textEdit.textChanged.connect(
+                lambda: application_list[self.ui.tabWidget.currentIndex()].positive_textEdit.setText(
+                    application_small_list[self.ui.tabWidget.currentIndex()].positive_textEdit.toPlainText()))
             self.ui_tab_w.add_positive_edit.textChanged.connect(
                 lambda: application_list[self.ui.tabWidget.currentIndex()].add_positive_edit.setText(
                     application_small_list[self.ui.tabWidget.currentIndex()].add_positive_edit.text()))
+            self.ui_tab_w.negative_textEdit.textChanged.connect(
+                lambda: application_list[self.ui.tabWidget.currentIndex()].negative_textEdit.setText(
+                    application_small_list[self.ui.tabWidget.currentIndex()].negative_textEdit.toPlainText()))
             self.ui_tab_w.add_negative_edit.textChanged.connect(
                 lambda: application_list[self.ui.tabWidget.currentIndex()].add_negative_edit.setText(
                     application_small_list[self.ui.tabWidget.currentIndex()].add_negative_edit.text()))
-            self.ui_tab_w.is_use_translate.stateChanged.connect(
-                lambda: application_list[self.ui.tabWidget.currentIndex()].is_use_translate.setChecked(
-                    application_small_list[self.ui.tabWidget.currentIndex()].is_use_translate.isChecked()))
             self.ui_tab_w.paint_weight.textChanged.connect(
                 lambda: application_list[self.ui.tabWidget.currentIndex()].paint_weight.setText(
                     application_small_list[self.ui.tabWidget.currentIndex()].paint_weight.text()))
@@ -304,6 +375,27 @@ class small_windows(QMainWindow):
         self.ui.tabWidget.setTabsClosable(True)
 
         self.ui.tabWidget.setCurrentIndex(parent.ui.tabWidget.currentIndex())
+
+        for i, tab in enumerate(application_list):
+            # ... existing code ...
+            
+            # 修改按钮绑定方式，使用 lambda 传递正确的索引
+            current_tab = application_small_list[i]
+            current_tab.add_positive_btn.clicked.connect(
+                lambda checked, idx=i: self.add_positive_text(idx))
+            current_tab.trans_positive_btn.clicked.connect(
+                lambda checked, idx=i: self.trans_positive_text(idx))
+            current_tab.add_positive_weight_btn.clicked.connect(
+                lambda checked, idx=i: self.add_positive_weight(idx))
+            
+            current_tab.add_negative_btn.clicked.connect(
+                lambda checked, idx=i: self.add_negative_text(idx))
+            current_tab.trans_negative_btn.clicked.connect(
+                lambda checked, idx=i: self.trans_negative_text(idx))
+            current_tab.add_negative_weight_btn.clicked.connect(
+                lambda checked, idx=i: self.add_negative_weight(idx))
+            
+            # ... rest of existing code ...
 
     def small_tool_bar(self, parent):
         self.ui.action_to_main_win.triggered.connect(lambda: self.change_to_Main_w(parent))
@@ -385,7 +477,7 @@ class EmittingStr(QtCore.QObject):
     def write(self, text):
         self.textWritten.emit(str(text))
 
-
+#主窗口
 class Main_windows(QMainWindow):
     __start_pos = None
     __end_pos = None
@@ -457,7 +549,7 @@ class Main_windows(QMainWindow):
         self.ui.tabWidget.setCurrentIndex(n - 1)
         # 把当前的tab从application_list删除
         application_list.pop(n)
-
+        
     def add_tab(self, tab=None, tab_w=None):
         # 在次末尾处添加
         global index
@@ -521,6 +613,8 @@ class Main_windows(QMainWindow):
         running_variable.all_running = False
         running_variable.running = False
         print("中止全部任务")
+
+
 
     # 快捷键导入SD
     def short_key_import_sd(self):
@@ -619,6 +713,60 @@ class Main_windows(QMainWindow):
         running_variable.running = False
         print("中止当前执行的任务")
 
+    def add_positive_text(self, index):
+        """添加正面提示词"""
+        current_text = application_list[index].positive_textEdit.toPlainText()
+        add_text = application_list[index].add_positive_edit.text()
+        if add_text:
+            if current_text:
+                new_text = current_text + ", " + add_text
+            else:
+                new_text = add_text
+            application_list[index].positive_textEdit.setText(new_text)
+            application_list[index].add_positive_edit.clear()
+
+    def trans_positive_text(self, index):
+        """翻译正面提示词"""
+        # 这里需要接入翻译API
+        text = application_list[index].add_positive_edit.text()
+        translated_text = translate_api(text)  # 需要实现翻译功能
+        application_list[index].add_positive_edit.setText(translated_text)
+
+    def add_positive_weight(self, index):
+        """添加正面提示词权重"""
+        text = application_list[index].add_positive_edit.text()
+        if text:
+            weighted_text = update_first_word(text)
+            application_list[index].add_positive_edit.setText(weighted_text)
+
+    def add_negative_text(self, index):
+        """添加负面提示词"""
+        current_text = application_list[index].negative_textEdit.toPlainText()
+        add_text = application_list[index].add_negative_edit.text()
+        
+        if add_text:
+            if current_text:
+                new_text = current_text + ", " + add_text
+            else:
+                new_text = add_text
+            application_list[index].negative_textEdit.setText(new_text)
+            application_list[index].add_negative_edit.clear()
+
+    def trans_negative_text(self, index):
+        """翻译负面提示词"""
+        # 这里需要接入翻译API
+        text = application_list[index].add_negative_edit.text()
+        translated_text = translate_api(text)  # 需要实现翻译功能
+        application_list[index].add_negative_edit.setText(translated_text)
+
+    def add_negative_weight(self, index):
+        """添加负面提示词权重"""
+        text = application_list[index].add_negative_edit.text()
+        if text:
+            weighted_text = update_first_word(text)
+            application_list[index].add_negative_edit.setText(weighted_text)
+
+
     def main_tool_bar(self):
         # 绑定工具栏的功能
         self.ui.actionadd_control.triggered.connect(lambda: add_cn_preset_win(self, application_list))
@@ -647,7 +795,7 @@ class Main_windows(QMainWindow):
         # 存档
         self.ui.actionsave.triggered.connect(lambda: save_project(self, application_list))
         self.ui.actionimport.triggered.connect(lambda: import_project(self, application_list))
-        self.ui.actionexit.triggered.connect(lambda: app.quit())
+        self.ui.actionexit.triggered.connect(lambda: self.close())
 
         shortcut = QShortcut(QKeySequence('Ctrl+s'), self)
         shortcut.activated.connect(lambda: save_project(self, application_list))
@@ -725,6 +873,7 @@ class Main_windows(QMainWindow):
         repair_pswindow(True)
         self.a = small_windows(self)
 
+
     def tabs_bind(self):
         # 对于每个tab执行的方法
         # 更改标签名
@@ -742,6 +891,22 @@ class Main_windows(QMainWindow):
             all_preset_name.append(i["name"])
         self.ui_tab_w.preset_combo.addItems(all_preset_name)
         self.ui_tab_w.preset_combo.setCurrentIndex(now_preset)
+
+        # 连接提示词处理按钮，使用 lambda 传递固定的索引值
+        current_index = len(application_small_list)  # 使用当前列表长度作为索引
+        self.ui_tab_w.add_positive_btn.clicked.connect(
+            lambda checked, idx=current_index: self.add_positive_text(self.ui.tabWidget.currentIndex()))
+        self.ui_tab_w.trans_positive_btn.clicked.connect(
+            lambda checked, idx=current_index: self.trans_positive_text(self.ui.tabWidget.currentIndex()))
+        self.ui_tab_w.add_positive_weight_btn.clicked.connect(
+            lambda checked, idx=current_index: self.add_positive_weight(self.ui.tabWidget.currentIndex()))
+        
+        self.ui_tab_w.add_negative_btn.clicked.connect(
+            lambda checked, idx=current_index: self.add_negative_text(self.ui.tabWidget.currentIndex()))
+        self.ui_tab_w.trans_negative_btn.clicked.connect(
+            lambda checked, idx=current_index: self.trans_negative_text(self.ui.tabWidget.currentIndex()))
+        self.ui_tab_w.add_negative_weight_btn.clicked.connect(
+            lambda checked, idx=current_index: self.add_negative_weight(self.ui.tabWidget.currentIndex()))
 
         # 更改重绘幅度
         self.ui_tab_w.paint_weight.setText(data["am"])
@@ -796,6 +961,14 @@ class Main_windows(QMainWindow):
         self.ui_tab_w.cn3_preset_set_btn.clicked.connect(
             lambda: set_cn_win(self, self.ui_tab_w.cn3_preset.currentIndex(), application_list))
 
+        self.ui_tab_w.preset_combo.currentIndexChanged.connect(lambda: update_prompt_text(
+            application_list[self.ui.tabWidget.currentIndex()].preset_combo, 
+            application_list[self.ui.tabWidget.currentIndex()].positive_textEdit,
+            application_list[self.ui.tabWidget.currentIndex()].negative_textEdit))
+        update_prompt_text(self.ui_tab_w.preset_combo, 
+            self.ui_tab_w.positive_textEdit,
+            self.ui_tab_w.negative_textEdit)
+
         # 控制重绘幅度和张数的输入范围
         self.ui_tab_w.paint_count.setValidator(QIntValidator(1, 9999999))
         self.reg = QRegularExpression('^0\.(0[1-9]|[1-9]\d?)$|^1\.00$')
@@ -838,6 +1011,7 @@ class Main_windows(QMainWindow):
         self.ui_tab_w.export_project_btn.clicked.connect(
             lambda: save_project_self(self, application_list, self.ui.tabWidget.currentIndex()))
 
+       
     def closeEvent(self, event):
         try:
             global is_exit

@@ -86,24 +86,10 @@ def import_to_sd(application_list):
                         continue2 = float(setting["interval2"])
                         max_pics = int(setting["max_psi1"])
                         max_hd = int(setting["max_psi2"])
-                        negative = setting["negative"]
-                        positive = setting["positive"]
+                        negative = application_list[i].negative_textEdit.toPlainText()
+                        positive = application_list[i].positive_textEdit.toPlainText()
                         sample = setting["sample"]
 
-                    time.sleep(continue1)
-                    add_positive = application_list[i].add_positive_edit.text()
-                    add_negative = application_list[i].add_negative_edit.text()
-                    if running_variable.running:
-                        # 判断是否要执行翻译
-                        if application_list[i].is_use_translate.isChecked():
-                            time.sleep(continue2)
-                            print(f"{application_list[i].tab_name.text()} 执行翻译")
-                            if add_positive != "":
-                                add_positive = translate(driver, add_positive)
-                            if add_negative != "":
-                                add_negative = translate(driver, add_negative)
-                    else:
-                        raise StopException
                     time.sleep(continue2)
 
                     # 打开weburl
@@ -137,15 +123,7 @@ def import_to_sd(application_list):
 
                     # 设置提示词
                     if running_variable.running:
-                        if add_positive != "" and add_negative != "":
-                            set_prompt(driver, f"{positive},{add_positive}",
-                                       f"{negative},{add_negative}")
-                        elif add_positive == "" and add_negative != "":
-                            set_prompt(driver, positive, f"{negative},{add_negative}")
-                        elif add_positive != "" and add_negative == "":
-                            set_prompt(driver, f"{positive},{add_positive}", negative)
-                        else:
-                            set_prompt(driver, positive, negative)
+                        set_prompt(driver, positive, negative)
                     else:
                         raise StopException
                     time.sleep(continue2)
@@ -194,12 +172,16 @@ def import_to_sd(application_list):
                     else:
                         raise StopException
 
+                    print(f"{application_list[i].tab_name.text()} 取消controlnet完成")
+
                     # 开启controlnet
                     if running_variable.running:
                         time.sleep(continue2)
                         check_control_net_start(driver)
                     else:
                         raise StopException
+
+                    print(f"{application_list[i].tab_name.text()} 检查controlnet是否开启完成")
 
                     # 设置controlnet
                     BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
@@ -359,8 +341,8 @@ def short_key_import_to_sd(application_list, current_tab):
             continue2 = float(setting["interval2"])
             max_pics = int(setting["max_psi1"])
             max_hd = int(setting["max_psi2"])
-            negative = setting["negative"]
-            positive = setting["positive"]
+            negative = application_list[current_tab].negative_textEdit.toPlainText()
+            positive = application_list[current_tab].positive_textEdit.toPlainText()
             sample = setting["sample"]
 
         # 先定位ps
@@ -387,19 +369,6 @@ def short_key_import_to_sd(application_list, current_tab):
         else:
             raise StopException
 
-        add_positive = application_list[current_tab].add_positive_edit.text()
-        add_negative = application_list[current_tab].add_negative_edit.text()
-        if running_variable.running:
-            # 判断是否要执行翻译
-            if application_list[current_tab].is_use_translate.isChecked():
-                time.sleep(continue2)
-                print(f"{application_list[current_tab].tab_name.text()} 执行翻译")
-                if add_positive != "":
-                    add_positive = translate(driver, add_positive)
-                if add_negative != "":
-                    add_negative = translate(driver, add_negative)
-        else:
-            raise StopException
         time.sleep(continue2)
 
         # 打开weburl
@@ -408,6 +377,7 @@ def short_key_import_to_sd(application_list, current_tab):
             open_web_url(driver, application_list[current_tab].webui_url.text())
         else:
             raise StopException
+        time.sleep(continue2)
 
         # 检测是否成功打开weburl
         if running_variable.running:
@@ -422,7 +392,6 @@ def short_key_import_to_sd(application_list, current_tab):
                 change_model(driver, model)
         else:
             raise StopException
-        time.sleep(continue2)
 
         # 转到图生图页面
         if running_variable.running:
@@ -433,14 +402,6 @@ def short_key_import_to_sd(application_list, current_tab):
 
         # 设置提示词
         if running_variable.running:
-            if add_positive != "" and add_negative != "":
-                set_prompt(driver, f"{positive},{add_positive}",
-                           f"{negative},{add_negative}")
-            elif add_positive == "" and add_negative != "":
-                set_prompt(driver, positive, f"{negative},{add_negative}")
-            elif add_positive != "" and add_negative == "":
-                set_prompt(driver, f"{positive},{add_positive}", negative)
-            else:
                 set_prompt(driver, positive, negative)
         else:
             raise StopException
@@ -489,12 +450,16 @@ def short_key_import_to_sd(application_list, current_tab):
         else:
             raise StopException
 
+        print(f"{application_list[current_tab].tab_name.text()} 取消controlnet完成")
+
         # 开启controlnet
         if running_variable.running:
             time.sleep(continue2)
             check_control_net_start(driver)
         else:
             raise StopException
+
+        print(f"{application_list[current_tab].tab_name.text()} 检查controlnet是否开启完成")
 
         # 设置controlnet
         BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
@@ -643,8 +608,8 @@ def begin_caculate(application_list, current_tab):
             continue2 = float(setting["interval2"])
             max_pics = int(setting["max_psi1"])
             max_hd = int(setting["max_psi2"])
-            negative = setting["negative"]
-            positive = setting["positive"]
+            negative = application_list[current_tab].negative_textEdit.toPlainText()
+            positive = application_list[current_tab].positive_textEdit.toPlainText()
             sample = setting["sample"]
 
         # 先定位ps
@@ -745,8 +710,8 @@ def back_ps(application_list, current_tab):
             continue2 = float(setting["interval2"])
             max_pics = int(setting["max_psi1"])
             max_hd = int(setting["max_psi2"])
-            negative = setting["negative"]
-            positive = setting["positive"]
+            negative = application_list[current_tab].negative_textEdit.toPlainText()
+            positive = application_list[current_tab].positive_textEdit.toPlainText()
             sample = setting["sample"]
 
         # 先定位ps
@@ -838,8 +803,8 @@ def only_import(application_list, current_tab):
             continue2 = float(setting["interval2"])
             max_pics = int(setting["max_psi1"])
             max_hd = int(setting["max_psi2"])
-            negative = setting["negative"]
-            positive = setting["positive"]
+            negative = application_list[current_tab].negative_textEdit.toPlainText()
+            positive = application_list[current_tab].positive_textEdit.toPlainText()
             sample = setting["sample"]
 
         # 先定位ps
@@ -1026,8 +991,8 @@ def only_import_and_generate(application_list, current_tab):
             continue2 = float(setting["interval2"])
             max_pics = int(setting["max_psi1"])
             max_hd = int(setting["max_psi2"])
-            negative = setting["negative"]
-            positive = setting["positive"]
+            negative = application_list[current_tab].negative_textEdit.toPlainText()
+            positive = application_list[current_tab].positive_textEdit.toPlainText()
             sample = setting["sample"]
 
         # 先定位ps
@@ -1276,8 +1241,8 @@ def hd_back_ps(application_list, current_tab):
             continue2 = float(setting["interval2"])
             max_pics = int(setting["max_psi1"])
             max_hd = int(setting["max_psi2"])
-            negative = setting["negative"]
-            positive = setting["positive"]
+            negative = application_list[current_tab].negative_textEdit.toPlainText()
+            positive = application_list[current_tab].positive_textEdit.toPlainText()
             sample = setting["sample"]
 
         # 先定位ps
@@ -1410,8 +1375,8 @@ def lama_upload(application_list, current_tab):
             continue2 = float(setting["interval2"])
             max_pics = int(setting["max_psi1"])
             max_hd = int(setting["max_psi2"])
-            negative = setting["negative"]
-            positive = setting["positive"]
+            negative = application_list[current_tab].negative_textEdit.toPlainText()
+            positive = application_list[current_tab].positive_textEdit.toPlainText()
             sample = setting["sample"]
 
         # 上传lama图片
@@ -1475,8 +1440,8 @@ def lama_download(application_list, current_tab):
             continue2 = float(setting["interval2"])
             max_pics = int(setting["max_psi1"])
             max_hd = int(setting["max_psi2"])
-            negative = setting["negative"]
-            positive = setting["positive"]
+            negative = application_list[current_tab].negative_textEdit.toPlainText()
+            positive = application_list[current_tab].positive_textEdit.toPlainText()
             sample = setting["sample"]
 
         # 上传lama图片

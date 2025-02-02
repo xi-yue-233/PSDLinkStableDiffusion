@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>320</width>
-    <height>361</height>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -106,38 +106,12 @@
     <set>Qt::LinksAccessibleByMouse</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_17">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>90</y>
-     <width>111</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;增加的负面提示词&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>60</y>
-     <width>111</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;增加的正面提示词&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="add_negative_edit">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>90</y>
-     <width>111</width>
+     <x>5</x>
+     <y>210</y>
+     <width>171</width>
      <height>21</height>
     </rect>
    </property>
@@ -150,29 +124,16 @@
    <property name="text">
     <string/>
    </property>
-  </widget>
-  <widget class="QCheckBox" name="is_use_translate">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>75</y>
-     <width>80</width>
-     <height>19</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>使用有道进行翻译</string>
-   </property>
-   <property name="text">
-    <string>启用翻译</string>
+   <property name="placeholderText">
+    <string>增加的负面提示词</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="add_positive_edit">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>60</y>
-     <width>111</width>
+     <x>5</x>
+     <y>122</y>
+     <width>171</width>
      <height>21</height>
     </rect>
    </property>
@@ -185,12 +146,15 @@
    <property name="text">
     <string/>
    </property>
+   <property name="placeholderText">
+    <string>增加的正面提示词</string>
+   </property>
   </widget>
   <widget class="QLineEdit" name="paint_weight">
    <property name="geometry">
     <rect>
      <x>60</x>
-     <y>115</y>
+     <y>235</y>
      <width>111</width>
      <height>21</height>
     </rect>
@@ -200,7 +164,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>115</y>
+     <y>235</y>
      <width>61</width>
      <height>16</height>
     </rect>
@@ -213,7 +177,7 @@
    <property name="geometry">
     <rect>
      <x>220</x>
-     <y>115</y>
+     <y>235</y>
      <width>81</width>
      <height>21</height>
     </rect>
@@ -223,7 +187,7 @@
    <property name="geometry">
     <rect>
      <x>175</x>
-     <y>115</y>
+     <y>235</y>
      <width>41</width>
      <height>16</height>
     </rect>
@@ -236,7 +200,7 @@
    <property name="geometry">
     <rect>
      <x>220</x>
-     <y>140</y>
+     <y>260</y>
      <width>91</width>
      <height>23</height>
     </rect>
@@ -252,7 +216,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>145</y>
+     <y>265</y>
      <width>71</width>
      <height>16</height>
     </rect>
@@ -265,7 +229,7 @@
    <property name="geometry">
     <rect>
      <x>70</x>
-     <y>140</y>
+     <y>260</y>
      <width>141</width>
      <height>23</height>
     </rect>
@@ -281,7 +245,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>170</y>
+     <y>290</y>
      <width>101</width>
      <height>19</height>
     </rect>
@@ -300,7 +264,7 @@
    <property name="geometry">
     <rect>
      <x>220</x>
-     <y>195</y>
+     <y>315</y>
      <width>91</width>
      <height>23</height>
     </rect>
@@ -316,7 +280,7 @@
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>195</y>
+     <y>315</y>
      <width>111</width>
      <height>21</height>
     </rect>
@@ -326,7 +290,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>195</y>
+     <y>315</y>
      <width>81</width>
      <height>20</height>
     </rect>
@@ -339,7 +303,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>220</y>
+     <y>340</y>
      <width>91</width>
      <height>23</height>
     </rect>
@@ -358,7 +322,7 @@
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>220</y>
+     <y>340</y>
      <width>111</width>
      <height>21</height>
     </rect>
@@ -368,7 +332,7 @@
    <property name="geometry">
     <rect>
      <x>-2</x>
-     <y>250</y>
+     <y>370</y>
      <width>91</width>
      <height>23</height>
     </rect>
@@ -387,7 +351,7 @@
    <property name="geometry">
     <rect>
      <x>78</x>
-     <y>250</y>
+     <y>370</y>
      <width>41</width>
      <height>23</height>
     </rect>
@@ -406,7 +370,7 @@
    <property name="geometry">
     <rect>
      <x>118</x>
-     <y>250</y>
+     <y>370</y>
      <width>121</width>
      <height>21</height>
     </rect>
@@ -416,7 +380,7 @@
    <property name="geometry">
     <rect>
      <x>220</x>
-     <y>220</y>
+     <y>340</y>
      <width>91</width>
      <height>23</height>
     </rect>
@@ -432,7 +396,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>275</y>
+     <y>395</y>
      <width>121</width>
      <height>23</height>
     </rect>
@@ -448,7 +412,7 @@
    <property name="geometry">
     <rect>
      <x>188</x>
-     <y>275</y>
+     <y>395</y>
      <width>121</width>
      <height>23</height>
     </rect>
@@ -464,7 +428,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>300</y>
+     <y>420</y>
      <width>91</width>
      <height>23</height>
     </rect>
@@ -480,7 +444,7 @@
    <property name="geometry">
     <rect>
      <x>118</x>
-     <y>300</y>
+     <y>420</y>
      <width>91</width>
      <height>23</height>
     </rect>
@@ -496,7 +460,7 @@
    <property name="geometry">
     <rect>
      <x>228</x>
-     <y>300</y>
+     <y>420</y>
      <width>81</width>
      <height>23</height>
     </rect>
@@ -512,7 +476,7 @@
    <property name="geometry">
     <rect>
      <x>118</x>
-     <y>330</y>
+     <y>450</y>
      <width>91</width>
      <height>23</height>
     </rect>
@@ -528,7 +492,7 @@
    <property name="geometry">
     <rect>
      <x>228</x>
-     <y>330</y>
+     <y>450</y>
      <width>81</width>
      <height>23</height>
     </rect>
@@ -544,13 +508,135 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>330</y>
+     <y>450</y>
      <width>91</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
     <string>导出为工程</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="trans_positive_btn">
+   <property name="geometry">
+    <rect>
+     <x>225</x>
+     <y>122</y>
+     <width>41</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>翻译</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="trans_negative_btn">
+   <property name="geometry">
+    <rect>
+     <x>225</x>
+     <y>210</y>
+     <width>41</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>翻译</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="add_positive_weight_btn">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>122</y>
+     <width>41</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>仅提升逗号的第一个词</string>
+   </property>
+   <property name="text">
+    <string>加权</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="add_negative_weight_btn">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>210</y>
+     <width>41</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>加权</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="positive_textEdit">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>60</y>
+     <width>301</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>7</pointsize>
+    </font>
+   </property>
+   <property name="placeholderText">
+    <string>正向提示词</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="negative_textEdit">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>150</y>
+     <width>301</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>7</pointsize>
+    </font>
+   </property>
+   <property name="placeholderText">
+    <string>反向提示词</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="add_positive_btn">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>122</y>
+     <width>41</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>加入</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="add_negative_btn">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>210</y>
+     <width>41</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>加入</string>
    </property>
   </widget>
  </widget>

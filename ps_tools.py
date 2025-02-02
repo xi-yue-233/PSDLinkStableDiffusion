@@ -1,7 +1,7 @@
 import os
-
 import sys
 import time
+import re
 from _ctypes import COMError
 from datetime import datetime
 
@@ -9,7 +9,120 @@ import photoshop.api as ps
 import pythoncom
 from photoshop import Session
 from PIL import Image
+import json
+from importlib import reload
+import requests
+import hashlib
+import uuid
 
+#翻译
+reload(sys)
+
+# 读取配置文件
+def load_config():
+    try:
+        BASE_PATH = os.path.dirname(os.path.realpath(sys.argv[0]))
+        config_path = os.path.join(BASE_PATH, "config.json")
+        with open(config_path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print("错误：找不到config.json文件，请确保配置文件存在")
+        sys.exit(1)
+    except json.JSONDecodeError:
+        print("错误：config.json格式不正确")
+        sys.exit(1)
+
+config = load_config()
+YOUDAO_URL = 'https://openapi.youdao.com/api'
+APP_KEY = config['youdao']['app_key']
+APP_SECRET = config['youdao']['app_secret']
+VOCAB_ID = config['youdao']['vocab_id']
+
+
+def encrypt(signStr):
+    hash_algorithm = hashlib.sha256()
+    hash_algorithm.update(signStr.encode('utf-8'))
+    return hash_algorithm.hexdigest()
+
+
+def truncate(q):
+    if q is None:
+        return None
+    size = len(q)
+    return q if size <= 20 else q[0:10] + str(size) + q[size - 10:size]
+
+
+def do_request(data):
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    return requests.post(YOUDAO_URL, data=data, headers=headers)
+
+
+def translate_api(text):
+    # 构建请求
+    data = {}
+    q = text
+    
+    data['signType'] = 'v3'
+    curtime = str(int(time.time()))
+    data['curtime'] = curtime
+    salt = str(uuid.uuid1())
+    signStr = APP_KEY + truncate(q) + salt + curtime + APP_SECRET
+    sign = encrypt(signStr)
+    data['appKey'] = APP_KEY
+    data['q'] = q
+    data['salt'] = salt
+    data['sign'] = sign
+    data['vocabId'] = VOCAB_ID
+
+    response = requests.post(YOUDAO_URL, data=data)
+    contentType = response.headers['Content-Type']
+    return response.json().get("translation")[0]
+
+
+#加权
+def update_first_word(text):
+    # 检查文本中使用的分隔符是英文逗号还是中文逗号
+    if '，' in text:
+        delimiter = '，'
+    else:
+        delimiter = ','
+
+    # 按照相应的分隔符分割文本
+    words = text.split(delimiter)
+
+    # 检查第一个单词是否已经是（单词:数字）或(单词:数字)的形式
+    first_word = words[0].strip()
+
+    # 匹配全角括号或半角括号的形式
+    match_full = re.match(r'^\（([^：]+)：(\d+\.\d+)\）$', first_word)  # 全角括号
+    match_full_half = re.match(r'^\（([^：]+):(\d+\.\d+)\）$', first_word)  # 全角括号
+    match_half = re.match(r'^\(([^:]+):(\d+\.\d+)\)$', first_word)  # 半角括号
+
+    if match_full:
+        # 如果是全角括号的形式，提取单词和数字，并将数字加0.1
+        word = match_full.group(1)
+        number = float(match_full.group(2)) + 0.1
+        new_first_word = f"?({word}:{number:.1f})"
+    elif match_full_half:
+        # 如果是半角括号的形式，提取单词和数字，并将数字加0.1
+        word = match_full_half.group(1)
+        number = float(match_full_half.group(2)) + 0.1
+        new_first_word = f"({word}:{number:.1f})"
+    elif match_half:
+        # 如果是半角括号的形式，提取单词和数字，并将数字加0.1
+        word = match_half.group(1)
+        number = float(match_half.group(2)) + 0.1
+        new_first_word = f"({word}:{number:.1f})"
+    else:
+        # 如果不是这种形式，将其转换为（单词:0.1）的形式，使用全角括号
+        new_first_word = f"({first_word}:0.1)"
+
+    # 将更新后的第一个单词放回文本中
+    words[0] = new_first_word
+    # 重新组合文本，使用原来的分隔符
+    updated_text = delimiter.join(words)
+
+    return updated_text
 
 # 定位ps
 def start_ps():
@@ -199,3 +312,15 @@ def export_controlnet_image_from_ps(app, document_name):
 
 # app = start_ps()
 # import_image_from_sd(app, "AI导出10-1693718908.jpg")
+
+def update_prompt_text(preset_combo, positive_textEdit, negative_textEdit):
+    """
+    根据预设下拉框的选择更新提示词文本框
+    """
+    config = load_config()
+    current_index = preset_combo.currentIndex()
+    
+    if current_index >= 0 and current_index < len(config['settings']):
+        selected_preset = config['settings'][current_index]
+        positive_textEdit.setPlainText(selected_preset['positive'])
+        negative_textEdit.setPlainText(selected_preset['negative'])

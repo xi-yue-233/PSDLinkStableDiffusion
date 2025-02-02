@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(332, 552)
+        MainWindow.resize(332, 685)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.is_block_short_key = QtWidgets.QCheckBox(self.centralwidget)
@@ -27,18 +27,18 @@ class Ui_MainWindow(object):
         self.stop_all.setGeometry(QtCore.QRect(235, 0, 91, 23))
         self.stop_all.setObjectName("stop_all")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
-        self.tabWidget.setGeometry(QtCore.QRect(10, 20, 316, 391))
+        self.tabWidget.setGeometry(QtCore.QRect(10, 20, 316, 521))
         self.tabWidget.setStyleSheet("")
         self.tabWidget.setObjectName("tabWidget")
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
         self.tabWidget.addTab(self.tab, "")
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.textBrowser.setGeometry(QtCore.QRect(10, 415, 316, 101))
+        self.textBrowser.setGeometry(QtCore.QRect(10, 550, 316, 101))
         self.textBrowser.setObjectName("textBrowser")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 332, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 332, 22))
         self.menubar.setObjectName("menubar")
         self.menu = QtWidgets.QMenu(self.menubar)
         self.menu.setObjectName("menu")
@@ -131,13 +131,10 @@ class Ui_MainWindow(object):
         self.stop_all.setText(_translate("MainWindow", "中止所有操作"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Tab 1"))
         self.textBrowser.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:\'Microsoft YaHei UI\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'SimSun\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Microsoft YaHei UI\';\"><br /></p></body></html>"))
         self.menu.setTitle(_translate("MainWindow", "文件"))
         self.menu_2.setTitle(_translate("MainWindow", "显示"))
         self.menu_3.setTitle(_translate("MainWindow", "切换昼夜模式"))

@@ -31,32 +31,22 @@
     },
     {
         "enable": true,
-        "name": "\u65b0\u9884\u8bbe",
-        "preprocessor": "canny",
-        "model": "control_v11p_sd15_canny_fp16 [b18e0966]",
-        "resolution": 512,
-        "param1": 128,
-        "param2": 180,
+        "name": "\u65b0\u9884\u8bbeopenpose",
+        "preprocessor": "openpose_full",
+        "model": "control_v11p_sd15_openpose [cab727d4]",
+        "resolution": "",
+        "param1": "",
+        "param2": "",
         "pixel_perfect": true
     },
     {
         "enable": true,
-        "name": "\u65b0\u9884\u8bbe",
+        "name": "\u65b0\u9884\u8bbe-\u4e09\u4e03",
         "preprocessor": "canny",
         "model": "control_v11p_sd15_canny_fp16 [b18e0966]",
         "resolution": 512,
-        "param1": 128,
-        "param2": 180,
-        "pixel_perfect": true
-    },
-    {
-        "enable": true,
-        "name": "\u65b0\u9884\u8bbe",
-        "preprocessor": "canny",
-        "model": "control_v11p_sd15_canny_fp16 [b18e0966]",
-        "resolution": 512,
-        "param1": 128,
-        "param2": 180,
+        "param1": 100,
+        "param2": 200,
         "pixel_perfect": true
     }
 ]

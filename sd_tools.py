@@ -8,6 +8,7 @@ import time
 import requests
 from PIL import Image
 from selenium import webdriver
+from selenium.common import NoSuchElementException, ElementNotInteractableException
 from selenium.webdriver import Keys, ActionChains
 from selenium.webdriver.chrome.options import Options
 
@@ -73,24 +74,18 @@ def open_driver():
 
 
 def translate(driver, translate_str):
-    url = "https://fanyi.youdao.com/"
-    # 标志位，表示是否找到相符的标签页
     found = False
-    # 遍历所有标签页
+    url = "https://fanyi.baidu.com/"
     for handle in driver.window_handles:
         # 切换到该标签页
         driver.switch_to.window(handle)
         # 检查网址是否相符
         if url in driver.current_url:
-            # 找到相符的标签页，执行操作
-            found = True
-            # do something
-            input_box = driver.find_element(By.ID, "js_fanyi_input")
-            input_box.clear()
-            input_box.send_keys(translate_str)
-            time.sleep(3)
-            output_box = driver.find_element(By.ID, "js_fanyi_output_resultOutput")
-            result = output_box.text
+            # 找到相符的标签页，在标签页进行执行
+            print(url)
+            print(driver.current_url)
+            url = f"https://fanyi.baidu.com/mtpe-individual/multimodal?query={translate_str}&lang=zh2en&ext_channel=Aldtype#/"
+            driver.get(url)
             break
     # 如果没有找到相符的标签页，打开一个新的标签页
     if not found:
@@ -99,24 +94,13 @@ def translate(driver, translate_str):
         # 切换到新标签页
         driver.switch_to.window(driver.window_handles[-1])
         # 加载网址并执行操作
+        url = f"https://fanyi.baidu.com/mtpe-individual/multimodal?query={translate_str}&lang=zh2en&ext_channel=Aldtype#/"
         driver.get(url)
-        # 检测翻译页面是否加载出来
-        while True:
-            # 如果碰到页面加载出来就跳出
-            try:
-                driver.find_element(By.ID, "js_fanyi_input")
-                break
-            except:
-                pass
-            # 如果中止检测位为False，不运行了也跳出
-            if not running_variable.running:
-                break
         # do something
-        input_box = driver.find_element(By.ID, "js_fanyi_input")
-        input_box.send_keys(translate_str)
-        time.sleep(3)
-        output_box = driver.find_element(By.ID, "js_fanyi_output_resultOutput")
-        result = output_box.text
+    time.sleep(3)
+    output_box = driver.find_element(By.XPATH, "//*[@id=\"trans-selection\"]/div/span")
+    result = output_box.text
+    print(result)
     return result
 
 
@@ -150,8 +134,12 @@ def reflesh_page(driver):
         try:
             driver.find_element(By.XPATH, "//*[@id=\"setting_sd_model_checkpoint\"]/label/div/div[1]/div/input")
             break
-        except:
-            pass
+        except NoSuchElementException:
+            try:
+                driver.find_element(By.XPATH, "//*[@id=\"component-3955\"]/div[2]/div/div[1]/div/input")
+                break
+            except:
+                pass
         # 如果中止检测位为False，不运行了也跳出
         if not running_variable.running:
             break
@@ -159,18 +147,30 @@ def reflesh_page(driver):
 
 def change_model(driver, model_name):
     # 找到模型
-    driver.find_element(By.XPATH,
-                        "//*[@id=\"setting_sd_model_checkpoint\"]/label/div/div[1]/div/input").click()
-    driver.find_element(By.XPATH,
-                        "//*[@id=\"setting_sd_model_checkpoint\"]/label/div/div[1]/div/input").send_keys(
-        model_name)
-    driver.find_element(By.XPATH,
-                        "//*[@id=\"setting_sd_model_checkpoint\"]/label/div/div[1]/div/input").send_keys(Keys.ENTER)
+    try:
+        driver.find_element(By.XPATH,
+                            "//*[@id=\"setting_sd_model_checkpoint\"]/label/div/div[1]/div/input").click()
+        driver.find_element(By.XPATH,
+                            "//*[@id=\"setting_sd_model_checkpoint\"]/label/div/div[1]/div/input").send_keys(
+            model_name)
+        driver.find_element(By.XPATH,
+                            "//*[@id=\"setting_sd_model_checkpoint\"]/label/div/div[1]/div/input").send_keys(Keys.ENTER)
+    except NoSuchElementException:
+        driver.find_element(By.XPATH,
+                            "//*[@id=\"component-3955\"]/div[2]/div/div[1]/div/input").click()
+        driver.find_element(By.XPATH,
+                            "//*[@id=\"component-3955\"]/div[2]/div/div[1]/div/input").send_keys(
+            model_name)
+        driver.find_element(By.XPATH,
+                            "//*[@id=\"component-3955\"]/div[2]/div/div[1]/div/input").send_keys(Keys.ENTER)
 
 
 def change_to_img2img(driver):
     # 进入图生图
-    driver.find_element(By.XPATH, "//*[@id=\"tabs\"]/div[1]/button[2]").click()
+    try:
+        driver.find_element(By.XPATH, "//*[@id=\"tab_img2img-button\"]").click()
+    except NoSuchElementException:
+        driver.find_element(By.XPATH, "//*[@id=\"tabs\"]/div[1]/button[2]").click()
 
 
 def set_prompt(driver, positive, negative):
@@ -183,7 +183,13 @@ def set_prompt(driver, positive, negative):
 
 def import_img_sd(driver, img_path):
     # 导入图片
-    driver.find_element(By.XPATH, "//*[@id=\"img2img_image\"]/div[3]/div/input").send_keys(img_path)
+    try:
+        driver.find_element(By.XPATH, "//*[@id=\"img2img_image\"]/div[3]/div/input").send_keys(img_path)
+    except NoSuchElementException:
+        parent_element = driver.find_element(By.XPATH, "//*[@id='img2img_image']")
+        # 在父元素下查找input元素，类型为file
+        input_element = parent_element.find_element(By.XPATH, ".//input[@type='file']")
+        input_element.send_keys(img_path)
 
 
 def select_sampling_method(driver, sampling_method):
@@ -193,13 +199,20 @@ def select_sampling_method(driver, sampling_method):
         driver.find_element(By.XPATH, "//*[@id=\"img2img_sampling\"]/label/div/div[1]/div/input").send_keys(
             sampling_method)
         driver.find_element(By.XPATH, "//*[@id=\"img2img_sampling\"]/label/div/div[1]/div/input").send_keys(Keys.ENTER)
-    except:
-        element = driver.find_element(By.XPATH, '//*[@id="img2img_sampling"]')
-        labels = element.find_elements(By.XPATH, './/label')
-        for label in labels:
-            # 在这里执行你想要的操作
-            if sampling_method == label.text:
-                label.find_element(By.XPATH, './/input').click()
+    except NoSuchElementException:
+        try:
+            driver.find_element(By.XPATH, "//*[@id=\"img2img_sampling\"]/div[2]/div/div[1]/div/input").clear()
+            driver.find_element(By.XPATH, "//*[@id=\"img2img_sampling\"]/div[2]/div/div[1]/div/input").send_keys(
+                sampling_method)
+            driver.find_element(By.XPATH, "//*[@id=\"img2img_sampling\"]/div[2]/div/div[1]/div/input").send_keys(
+                Keys.ENTER)
+        except NoSuchElementException:
+            element = driver.find_element(By.XPATH, '//*[@id="img2img_sampling"]')
+            labels = element.find_elements(By.XPATH, './/label')
+            for label in labels:
+                # 在这里执行你想要的操作
+                if sampling_method == label.text:
+                    label.find_element(By.XPATH, './/input').click()
 
 
 def set_width_height(driver, img_path, lim_size):
@@ -244,10 +257,16 @@ def check_control_net_start(driver):
         input_btn.click()
         input_btn.click()
     except:
-        driver.find_element(By.XPATH, "//*[@id=\"img2img_controlnet\"]").click()
+        try:
+            driver.find_element(By.XPATH, "//*[@id=\"img2img_controlnet\"]").click()
+        except NoSuchElementException:
+            driver.find_element(By.XPATH, "//*[@id=\"controlnet\"]/button").click()
         while True:
             try:
-                driver.find_element(By.XPATH, "//*[@id=\"img2img_controlnet_tabs\"]/div[1]/button[1]").click()
+                try:
+                    driver.find_element(By.XPATH, "//*[@id=\"img2img_controlnet_tabs\"]/div[1]/button[1]").click()
+                except NoSuchElementException:
+                    driver.find_element(By.XPATH, "//*[@id=\"input-accordion-5\"]/button").click()
                 break
             except:
                 continue
@@ -258,8 +277,14 @@ def set_control_net(driver, controlnet_id, is_enable, is_perfect_pixel, preproce
                     img_path=None):
     # 设置controlnet
     # 先进入第几个controlnet
-    driver.find_element(By.XPATH,
-                        f"//*[@id=\"img2img_controlnet_tabs\"]/div[1]/button[{str(int(controlnet_id) + 1)}]").click()
+    try:
+        driver.find_element(By.XPATH,
+                            f"//*[@id=\"img2img_controlnet_tabs\"]/div[1]/button[{str(int(controlnet_id) + 1)}]").click()
+    except NoSuchElementException:
+        if driver.find_element(By.XPATH,
+                                f"//*[@id=\"input-accordion-{str(int(controlnet_id) + 5)}\"]").get_attribute('class')=='block gradio-accordion input-accordion svelte-12cmxck padded':
+                driver.find_element(By.XPATH,
+                                f"//*[@id=\"input-accordion-{str(int(controlnet_id) + 5)}\"]/button").click()
     # 把已经导入的图取消掉
     try:
         driver.find_element(By.XPATH,
@@ -300,23 +325,44 @@ def set_control_net(driver, controlnet_id, is_enable, is_perfect_pixel, preproce
         if check:
             perfect_pixel.click()
     # 设置预处理器
-    driver.find_element(By.XPATH,
-                        f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_preprocessor_dropdown\"]/label/div/div[1]/div/input").clear()
-    driver.find_element(By.XPATH,
-                        f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_preprocessor_dropdown\"]/label/div/div[1]/div/input").send_keys(
-        preprocessor)
-    driver.find_element(By.XPATH,
-                        f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_preprocessor_dropdown\"]/label/div/div[1]/div/input").send_keys(
-        Keys.ENTER)
+    try:
+        driver.find_element(By.XPATH,
+                            f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_preprocessor_dropdown\"]/label/div/div[1]/div/input").clear()
+        driver.find_element(By.XPATH,
+                            f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_preprocessor_dropdown\"]/label/div/div[1]/div/input").send_keys(
+            preprocessor)
+        driver.find_element(By.XPATH,
+                            f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_preprocessor_dropdown\"]/label/div/div[1]/div/input").send_keys(
+            Keys.ENTER)
+    except NoSuchElementException:
+        driver.find_element(By.XPATH,
+                            f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_preprocessor_dropdown\"]/div[2]/div/div[1]/div/input").clear()
+
+        driver.find_element(By.XPATH,
+                            f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_preprocessor_dropdown\"]/div[2]/div/div[1]/div/input").send_keys(
+            preprocessor)
+        driver.find_element(By.XPATH,
+                            f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_preprocessor_dropdown\"]/div[2]/div/div[1]/div/input").send_keys(
+            Keys.ENTER)
     # 设置controlnet模型
-    driver.find_element(By.XPATH,
-                        f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_model_dropdown\"]/label/div/div[1]/div/input").clear()
-    driver.find_element(By.XPATH,
-                        f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_model_dropdown\"]/label/div/div[1]/div/input").send_keys(
-        model)
-    driver.find_element(By.XPATH,
-                        f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_model_dropdown\"]/label/div/div[1]/div/input").send_keys(
-        Keys.ENTER)
+    try:
+        driver.find_element(By.XPATH,
+                            f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_model_dropdown\"]/label/div/div[1]/div/input").clear()
+        driver.find_element(By.XPATH,
+                            f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_model_dropdown\"]/label/div/div[1]/div/input").send_keys(
+            model)
+        driver.find_element(By.XPATH,
+                            f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_model_dropdown\"]/label/div/div[1]/div/input").send_keys(
+            Keys.ENTER)
+    except NoSuchElementException:
+        driver.find_element(By.XPATH,
+                            f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_model_dropdown\"]/div[2]/div/div[1]/div/input").clear()
+        driver.find_element(By.XPATH,
+                            f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_model_dropdown\"]/div[2]/div/div[1]/div/input").send_keys(
+            model)
+        driver.find_element(By.XPATH,
+                            f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_model_dropdown\"]/div[2]/div/div[1]/div/input").send_keys(
+            Keys.ENTER)
     # 设置参数
     if resolution and resolution != "":
         try:
@@ -369,22 +415,29 @@ def test_sd(driver):
 
 def cancel_controlnet(driver):
     try:
-        driver.find_element(By.XPATH,
-                            f"//*[@id=\"img2img_controlnet_ControlNet-0_controlnet_enable_checkbox\"]/label/input")
-        # 如果开启了，就把启动按钮全部取消
-        for controlnet_id in range(0, 4):
+        try:
+            for controlnet_id in range(0,2):
+                if driver.find_element(By.XPATH,
+                                    f" //*[@id=\"input-accordion-{controlnet_id+5}-visible-checkbox\"]").is_selected():
+                    driver.find_element(By.XPATH,
+                                        f" //*[@id=\"input-accordion-{controlnet_id + 5}-visible-checkbox\"]").click()
+        except NoSuchElementException:
             driver.find_element(By.XPATH,
-                                f"//*[@id=\"img2img_controlnet_tabs\"]/div[1]/button[{controlnet_id + 1}]").click()
-            enable_element = driver.find_element(By.XPATH,
-                                                 f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_enable_checkbox\"]/label/input")
-            check = enable_element.is_selected()
-            if check:
-                enable_element.click()
-        driver.find_element(By.XPATH,
-                            f"//*[@id=\"img2img_controlnet_tabs\"]/div[1]/button[1]").click()
+                                    f"//*[@id=\"img2img_controlnet_ControlNet-0_controlnet_enable_checkbox\"]/label/input")
+            # 如果开启了，就把启动按钮全部取消
+            for controlnet_id in range(0, 4):
+                driver.find_element(By.XPATH,
+                                    f"//*[@id=\"img2img_controlnet_tabs\"]/div[1]/button[{controlnet_id + 1}]").click()
+                enable_element = driver.find_element(By.XPATH,
+                                                     f"//*[@id=\"img2img_controlnet_ControlNet-{controlnet_id}_controlnet_enable_checkbox\"]/label/input")
+                check = enable_element.is_selected()
+                if check:
+                    enable_element.click()
+            driver.find_element(By.XPATH,
+                                f"//*[@id=\"img2img_controlnet_tabs\"]/div[1]/button[1]").click()
     except:
-        # 未开启就什么都不做
-        pass
+         # 未开启就什么都不做
+            pass
 
 
 def SD_scale(driver, img_path, lim_sd_scale, width, height, model):
