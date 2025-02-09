@@ -330,8 +330,8 @@
     "yingdiao": "ctrl+shift+f3",
     "baohe": "ctrl+shift+f",
     "youdao": {
-        "app_key": "填写你自己的有道APIKey",
-        "app_secret": "填写你自己的有道API密码",
+        "app_key": "\u586b\u5199\u4f60\u81ea\u5df1\u7684\u6709\u9053APIKey",
+        "app_secret": "\u586b\u5199\u4f60\u81ea\u5df1\u7684\u6709\u9053API\u5bc6\u7801",
         "vocab_id": "\u6d63\u72b5\u6b91\u9422\u3126\u57db\u7487\u5d88\u3003ID"
     }
 }
